@@ -1,0 +1,10 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "templete/certInfo/certInfo"
+  ],
+  "window": {
+    "defaultTitle": "云证书"
+  }
+}

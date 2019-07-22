@@ -1,0 +1,13 @@
+<import src="/templete/certInfo/certInfo"/>
+
+<view>
+  <view a:if = "{{existCert == true}}">
+      <!-- 展现证书信息的模板 -->
+      <template is="certInfo" data="{{certInfo:certInfo}}"></template>
+      <button size="default" type="primary"  onTap="scan">  <icon type="search"></icon>我是扫码图标</button>
+ </view>
+ <view a:else>
+     您还没有申请云证书
+    <button size="default" type="primary"  onTap="apply">申请云证书</button>
+ </view>
+</view>

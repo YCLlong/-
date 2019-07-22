@@ -1,0 +1,6 @@
+<view>
+    <image style="width:250rpx;height:150rpx;" src="/images/app.png"/>
+    <text>\n\n需要获取您的头像信息\n\n</text>
+    <text>需要获取您的身份信息</text>
+    <button size="default" type="primary" onTap="login">登录</button>
+</view>
