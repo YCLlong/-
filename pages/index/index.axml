@@ -1,15 +1,10 @@
-<import src="/templete/certInfo/certInfo"/>
+<import src="/templete/cert/cert"/>
 <view>
     <!-- 用户已有云证书 -->
     <view a:if = "{{existCert == true}}">
         <view a:if = "{{certInfo.status > 0}}">
             <!-- 展现证书信息的模板 -->
-            <template is="certInfo" data="{{certInfo:certInfo}}"></template>
-            <view a:if = "{{certInfo.status == 2000}}">
-                <!-- 正常状态的证书才能扫码 -->
-                <button size="default" type="primary" onTap="scan">
-                    <icon type="search"></icon>我是扫码图标</button>
-            </view>
+            <template is="cert" data="{{certInfo:certInfo}}"></template>
         </view>
         <view a:else>
              <!-- 等待签发的界面。下拉查询最新状态的证书信息 -->

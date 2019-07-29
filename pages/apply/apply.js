@@ -45,11 +45,15 @@ Page({
          //证书申请提交成功，处理页面跳转逻辑
 
 
-
-         
-        dd.redirectTo({
-            url: '/pages/index/index'
+        
+        app.request(app.CERT_APPLY_URL,data,function(){
+            debugger;
+            dd.redirectTo({
+                url: '/pages/index/index'
+            });
         });
+
+       
 
 
 

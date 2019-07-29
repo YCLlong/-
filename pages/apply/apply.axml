@@ -5,13 +5,13 @@
             <view>姓名</view>
             <input name="name" placeholder="请输入姓名" onInput="nameInput"/>
             <view>身份证号码</view>
-            <input name="idCode" placeholder="请输入身份证号码" type="idcard"  onInput="idCodeInput"/>
+            <input name="idCode" placeholder="请输入身份证号码" type="idcard"/>
             <view>手机号</view>
-            <input name="mobile" placeholder="请输入手机号" type="number" maxlength="11" onInput="mobileInput"/>
+            <input name="mobile" placeholder="请输入手机号" type="number" maxlength="11"/>
             <view>pin码</view>
-            <input name="pin" password="true" placeholder="请输入pin码"  maxlength="6" onInput="pinInput"/>
+            <input name="pin" password="true" placeholder="请输入pin码"  maxlength="6"/>
             <view>确认pin码</view>
-             <input name="pinConfirm" password="true" placeholder="请确认pin码"  maxlength="6" onInput="pinConfirmInput"/>
+             <input name="pinConfirm" password="true" placeholder="请确认pin码"  maxlength="6"/>
             <button formType="submit"  type="primary">申请</button>
         </view>
     </form>

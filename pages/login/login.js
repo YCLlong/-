@@ -44,17 +44,20 @@ Page({
 
                     //拿到证书信息开始跳转到主页
                     var certInfo = {
-                        name:'123ZJCA123123',
-                        code:'10086',
-                        notAfter:'2020年8月8日'
+                        cn:'123ZJCA123123',
+                        sn:'10086',
+                        idCode:'340826199909024459',
+                        notBefore:'2020年8月8日',
+                        notAfter:'2020年8月8日',
+                        status:2000
                     };
 
-                   certInfo = null;
+                 //  certInfo = null;
 
                     //主页地址
                    var url = "/pages/index/index";
                      if(certInfo != null){
-                         url = url + "?certName=" + certInfo.name + "&code=" + certInfo.code + "&notAfter=" + certInfo.notAfter;
+                         url = url + "?cn=" + certInfo.cn + "&sn=" + certInfo.sn + "&idCode=" + certInfo.idCode + "&notBefore=" + certInfo.notBefore  + "&notAfter=" + certInfo.notAfter + "&status=" + certInfo.status;
                      }
                     dd.reLaunch({
                         url: url

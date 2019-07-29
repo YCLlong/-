@@ -2,7 +2,7 @@
   "pages": [
     "pages/login/login",
     "pages/index/index",
-    "templete/certInfo/certInfo",
+    "templete/cert/cert",
     "pages/apply/apply",
     "templete/pin/pin"
   ],
