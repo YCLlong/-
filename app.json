@@ -2,7 +2,9 @@
   "pages": [
     "pages/login/login",
     "pages/index/index",
-    "templete/certInfo/certInfo"
+    "templete/certInfo/certInfo",
+    "pages/apply/apply",
+    "templete/pin/pin"
   ],
   "window": {
     "defaultTitle": "云证书"

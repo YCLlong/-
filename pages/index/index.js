@@ -1,14 +1,21 @@
 Page({
     data: {
         existCert: false,
+        certInfo:{}
     },
+    /**
+     * @param   query   通过类似url地址 get请求传递到页面的参数
+     * 
+     */
     onLoad(query) {
-        if (query.code != null) {
+        if (query.status != null) {
             //存在证书信息
             var certInfo = {
                 name: query.certName,
                 code: query.code,
-                notAfter: query.notAfter
+                notBefore:query.notBefore,
+                notAfter: query.notAfter,
+                status:query.status
             };
             this.setData({
                 existCert: true,
@@ -54,7 +61,7 @@ Page({
         dd.scan({
             type: 'qr',
             success: (res) => {
-                dd.alert({ title:'二维码内容',content: res.code });
+                dd.alert({ title: '二维码内容', content: res.code });
             },
             fail: (res) => {
                 debugger;
@@ -62,7 +69,19 @@ Page({
             }
         });
     },
-    apply(){
-        getApp().showSuccess('假装你申请成功');
+    apply() {
+        dd.confirm({
+            title: '新领须知',
+            content: '这个是须知内容，很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长123456',
+            confirmButtonText: '同意',
+            cancelButtonText: '拒绝',
+            success: (result) => {
+                if(result.confirm){
+                    dd.navigateTo({
+                        url: '/pages/apply/apply'
+                    });   
+                }
+            },
+        });
     }
 });

@@ -19,16 +19,17 @@ Page({
         var app = getApp();
         var userKey = app.genUserKey();
         if (userKey != null && userKey != '') {
-            //访问接口【拿着用户账号的key去登录】
+            //API1，用免登Token去登录系统
             var param = {userKey: userKey};
             app.request(app.LOGIN_URL, param, function(res) {
                 //========接口返回后逻辑处理========
 
-                //认证成功之后，拿到证书信息开始跳转到主页F
+                //认证成功之后，拿到证书信息开始跳转到主页
             }, null);
+        }else{
+            this.login();
         }
     },
-    
     login() {
         var app = getApp();
         dd.getAuthCode({
@@ -36,19 +37,23 @@ Page({
                 var authCode = res.authCode;
                 var param = {authCode:authCode};
                 app.request(app.LOGIN_FIRST_URL, param, function(res) {
-                    //========接口返回后逻辑处理========
+                    //========用户第一次登录小程序，访问API2，通过用户授权后的Code请求登录========
 
 
-                    //认证成功之后，拿到证书信息开始跳转到主页
+                    //登录成功之后将返回的用户标识存到缓存
+
+                    //拿到证书信息开始跳转到主页
                     var certInfo = {
                         name:'123ZJCA123123',
                         code:'10086',
                         notAfter:'2020年8月8日'
                     };
 
+                   certInfo = null;
+
                     //主页地址
                    var url = "/pages/index/index";
-                     if(certInfo == null){
+                     if(certInfo != null){
                          url = url + "?certName=" + certInfo.name + "&code=" + certInfo.code + "&notAfter=" + certInfo.notAfter;
                      }
                     dd.reLaunch({
@@ -61,7 +66,4 @@ Page({
             }
         });
     },
-
-
-    
 });

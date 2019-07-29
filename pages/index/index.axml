@@ -1,13 +1,24 @@
 <import src="/templete/certInfo/certInfo"/>
-
 <view>
-  <view a:if = "{{existCert == true}}">
-      <!-- 展现证书信息的模板 -->
-      <template is="certInfo" data="{{certInfo:certInfo}}"></template>
-      <button size="default" type="primary"  onTap="scan">  <icon type="search"></icon>我是扫码图标</button>
- </view>
- <view a:else>
-     您还没有申请云证书
-    <button size="default" type="primary"  onTap="apply">申请云证书</button>
- </view>
+    <!-- 用户已有云证书 -->
+    <view a:if = "{{existCert == true}}">
+        <view a:if = "{{certInfo.status > 0}}">
+            <!-- 展现证书信息的模板 -->
+            <template is="certInfo" data="{{certInfo:certInfo}}"></template>
+            <view a:if = "{{certInfo.status == 2000}}">
+                <!-- 正常状态的证书才能扫码 -->
+                <button size="default" type="primary" onTap="scan">
+                    <icon type="search"></icon>我是扫码图标</button>
+            </view>
+        </view>
+        <view a:else>
+             <!-- 等待签发的界面。下拉查询最新状态的证书信息 -->
+            证书正在签发中。。。
+        </view>
+    </view>
+    <!-- 用户还没有申请证书 -->
+    <view a:else>
+        您还没有申请证书
+        <button size="default" type="primary" onTap="apply">申请证书</button>
+    </view>
 </view>

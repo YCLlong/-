@@ -1,0 +1,10 @@
+.pinCode{
+    width: 29rpx;
+    border-color: red;
+    border-style: dashed;
+}
+
+.pinContainer{
+    float: left;
+    background-color:red;
+}

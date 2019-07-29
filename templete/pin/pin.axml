@@ -1,0 +1,13 @@
+<template name="pin">
+    <view class="pinContainer">
+        <input password="true" maxlength="1" name="code" class="pinCode" />
+        <input password="true" maxlength="1" name="code" class="pinCode" />
+        <input password="true" maxlength="1" name="code" class="pinCode" />
+        <input password="true" maxlength="1" name="code" class="pinCode" />
+        <input password="true" maxlength="1" name="code" class="pinCode" />
+        <input password="true" maxlength="1" name="code" class="pinCode" /> 
+    </view>
+
+
+
+</template>
