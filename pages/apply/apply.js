@@ -12,21 +12,22 @@ Page({
       var pinConfirm = data.pinConfirm;
 
       var app = getApp();
-      if(name == null || name.trim() == ''){
+      var verify = require('/utils/verify.js')
+      if(verify.isBlack(name)){
         app.showError("请您输入姓名");
         return;
       }
-      if(!app.isCardNo(idCode)){
+      if(!verify.isCardNo(idCode)){
         app.showError("请输入正确的身份证号码");
         return;
       }
 
-      if(!app.isMobileNo(mobile)){
+      if(!verify.isMobileNo(mobile)){
         app.showError("请输入正确的手机号");
         return;
       }
 
-      if(pin == null || pin == ''){
+      if(verify.isBlack(pin)){
           app.showError("pin码必须输入");
           return;  
       }
@@ -47,7 +48,6 @@ Page({
 
         
         app.request(app.CERT_APPLY_URL,data,function(){
-            debugger;
             dd.redirectTo({
                 url: '/pages/index/index'
             });

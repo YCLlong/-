@@ -52,12 +52,12 @@ Page({
                         status:2000
                     };
 
-                 //  certInfo = null;
+                   certInfo = null;
 
                     //主页地址
                    var url = "/pages/index/index";
                      if(certInfo != null){
-                         url = url + "?cn=" + certInfo.cn + "&sn=" + certInfo.sn + "&idCode=" + certInfo.idCode + "&notBefore=" + certInfo.notBefore  + "&notAfter=" + certInfo.notAfter + "&status=" + certInfo.status;
+                         url = url + "?cn=" + certInfo.cn + "&sn=" + certInfo.sn + "&idCode=" + certInfo.idCode + "&notBefore=" + certInfo.notBefore  + "&notAfter=" + certInfo.notAfter + "&certStatus=" + certInfo.status;
                      }
                     dd.reLaunch({
                         url: url

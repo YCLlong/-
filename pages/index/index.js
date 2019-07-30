@@ -9,11 +9,11 @@ Page({
      */
     onLoad(query) {
         var biz = require("/utils/biz.js");
-        var certInfo = biz.getCertInfo(query);
-        if (certInfo != null) {  
+        var data = biz.analyseQuery(query);
+        if (data != null && data.existCert) {  
             this.setData({
                 existCert: true,
-                certInfo: certInfo
+                certInfo: data.certInfo
             });
 
         }
