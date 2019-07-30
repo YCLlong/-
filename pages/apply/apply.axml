@@ -1,4 +1,3 @@
-<import src="/templete/pin/pin"/>
 <view>
     <form onSubmit="certApply">
         <view class="section">

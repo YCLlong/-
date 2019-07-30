@@ -8,16 +8,9 @@ Page({
      * 
      */
     onLoad(query) {
-        if (query.status != null) {
-            //存在证书信息
-            var certInfo = {
-                cn: query.cn,
-                sn: query.sn,
-                idCode:query.idCode,
-                notBefore:query.notBefore,
-                notAfter: query.notAfter,
-                status:query.status
-            };
+        var biz = require("/utils/biz.js");
+        var certInfo = biz.getCertInfo(query);
+        if (certInfo != null) {  
             this.setData({
                 existCert: true,
                 certInfo: certInfo
@@ -69,23 +62,6 @@ Page({
                     });   
                 }
             },
-        });
-    },
-     /**
-     * 扫二维码
-     */
-    scan() {
-        dd.scan({
-            type: 'qr',
-            success: (res) => {
-                //调用第三方js库中的方法
-                var sha = require('/utils/sha256.js');
-                var sign = sha.sha256(res.code);
-                dd.alert({ title: '二维码内容', content: sign });
-            },
-            fail: (res) => {
-                getApp().showError("扫码失败！错误代码：" + res.code);
-            }
         });
     }
 });
