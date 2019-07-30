@@ -21,12 +21,21 @@ App({
 
     onLaunch(options) {
         // 第一次打开
-        // options.query == {number:1}
-        console.info('App onLaunch');
+        if(options.query != null){
+            var biz = require("/utils/biz.js");
+            var data = biz.analyseQuery(options.query);
+            debugger;
+            if(data != null && data.existCode){
+                //需要处理二维码信息
+                var param = biz.codeUrl(data.codeInfo);
+                console.info('开始跳转' + '/pages/login/login' + param);
+                dd.redirectTo({
+                    url: '/pages/login/login' + param
+                })
+            }
+        }
     },
     onShow(options) {
-        // 从后台被 scheme 重新打开
-        // options.query == {number:1}
     },
 
     /**
@@ -113,7 +122,7 @@ App({
         try {
             return dd.getStorageSync({ key: this.DD_USER_KEY }).data;
         } catch (e) {
-            showError("无法获取缓存信息，详情：" + e.errorMessage);
+            showError("无法读取缓存信息，详情：" + e.errorMessage);
         }
     },
 

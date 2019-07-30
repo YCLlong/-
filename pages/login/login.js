@@ -14,7 +14,7 @@
 
 Page({
     data: {},
-    onLoad() {
+    onLoad(query) {
         //页面加载
         var app = getApp();
         var userKey = app.genUserKey();
@@ -23,7 +23,7 @@ Page({
             var param = {userKey: userKey};
             app.request(app.LOGIN_URL, param, function(res) {
                 //========接口返回后逻辑处理========
-
+               
                 //认证成功之后，拿到证书信息开始跳转到主页
             }, null);
         }else{
@@ -31,6 +31,7 @@ Page({
         }
     },
     login() {
+      
         var app = getApp();
         dd.getAuthCode({
             success: function(res) {
@@ -52,12 +53,14 @@ Page({
                         status:2000
                     };
 
-                   certInfo = null;
+                  // certInfo = null;
 
                     //主页地址
-                   var url = "/pages/index/index";
+                    var url = "/pages/index/index";
                      if(certInfo != null){
-                         url = url + "?cn=" + certInfo.cn + "&sn=" + certInfo.sn + "&idCode=" + certInfo.idCode + "&notBefore=" + certInfo.notBefore  + "&notAfter=" + certInfo.notAfter + "&certStatus=" + certInfo.status;
+                        var biz = require('/utils/biz.js');
+                        var param = biz.certUrl(certInfo);
+                        url = url + param;
                      }
                     dd.reLaunch({
                         url: url
