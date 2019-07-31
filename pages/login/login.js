@@ -17,16 +17,11 @@ Page({
     onLoad(query) {
         //页面加载
         var app = getApp();
-        var userKey = app.genUserKey();
-        if (userKey != null && userKey != '') {
-            //API1，用免登Token去登录系统
-            var param = {userKey: userKey};
-            app.request(app.LOGIN_URL, param, function(res) {
-                //========接口返回后逻辑处理========
-               
-                //认证成功之后，拿到证书信息开始跳转到主页
-            }, null);
-        }else{
+        var userCode = app.genUserCode();
+        if (userCode != null && userCode != '') {
+            //免密登录
+            this.loginNoPwd(userCode);
+        } else {
             this.login();
         }
     },
@@ -34,51 +29,100 @@ Page({
     /**
      * 免密登录
      */
-    loginNoPwd(){
+    loginNoPwd(userCode) {
+        var app = getApp();
+        //API1，用免登Token去登录系统
+        var param = {
+            method: '1002',
+            dtid: userCode,
+        }
+        app.request(app.GATE_WAY, param, function(res) {
+            var biz = require('/utils/biz.js');
+            var msg = require('/utils/msg.js');
+            var resData = biz.resp(res);
+            if(resData.success){
+                var token = resData.data.token;
+                if (token == null || token == undefined) {
+                    msg.errorMsg('服务器返回参数错误');
+                    return;
+                }
+                //将token更新到app
+                getApp().DD_USER_TOKEN = token;
 
 
 
+
+            }else{
+                msg.errorMsg(resData.msg);
+            }
+        }, null);
+
+        //拿到证书信息开始跳转到主页
+        var certInfo = {
+            cn: '123ZJCA123123',
+            sn: '10086',
+            idCode: '340826199909024459',
+            notBefore: '2020年8月8日',
+            notAfter: '2020年8月8日',
+            status: 2000
+        };
+
+        // certInfo = null;
+
+        //主页地址
+        var url = "/pages/index/index";
+        if (certInfo != null) {
+            var biz = require('/utils/biz.js');
+            var param = biz.certUrl(certInfo);
+            url = url + param;
+        }
+        dd.reLaunch({
+            url: url
+        });
     },
 
     //授权登录
     login() {
         var app = getApp();
+        var msg = require('/utils/msg.js');
         dd.getAuthCode({
             success: function(res) {
                 var authCode = res.authCode;
-                var param = {authCode:authCode};
-                app.request(app.LOGIN_FIRST_URL, param, function(res) {
-                    //========用户第一次登录小程序，访问API2，通过用户授权后的Code请求登录========
+                var param = {
+                    //首次登录接口标识码
+                    method: '1001',
+                    code: authCode
+                };
+                app.request(app.GATE_WAY, param, function(res) {
+                    var biz = require('/utils/biz.js');
+                    var resData = biz.resp(res);
+                    if (resData.success) {
+                        //获取用户免密标识
+                        var userCode = resData.data.dtid;
+                        if (userCode == null || userCode == undefined) {
+                            msg.errorMsg('服务器返回参数错误');
+                            return;
+                        }
+                        //将免密标识存储到缓存
+                        try{                        
+                            dd.setStorageSync({
+                                key: app.DD_USER_CODE,
+                                data:userCode
+                            });
+                        }catch(e){
+                            msg.errorMsg('写入缓存失败');
+                            return;
+                        }
 
-
-                    //登录成功之后将返回的用户标识存到缓存
-
-                    //拿到证书信息开始跳转到主页
-                    var certInfo = {
-                        cn:'123ZJCA123123',
-                        sn:'10086',
-                        idCode:'340826199909024459',
-                        notBefore:'2020年8月8日',
-                        notAfter:'2020年8月8日',
-                        status:2000
-                    };
-
-                  // certInfo = null;
-
-                    //主页地址
-                    var url = "/pages/index/index";
-                     if(certInfo != null){
-                        var biz = require('/utils/biz.js');
-                        var param = biz.certUrl(certInfo);
-                        url = url + param;
-                     }
-                    dd.reLaunch({
-                        url: url
-                    });
+                        //登录系统
+                         this.loginNoPwd(userCode);
+                    } else {
+                        msg.errorMsg(resData.msg);
+                    }
                 }, null);
             },
             fail: function(err) {
-                app.showError("授权失败");
+                 msg.errorMsg('授权失败');
             }
         });
     },

@@ -1,21 +1,12 @@
 App({
-    //第一次登录地址
-    LOGIN_FIRST_URL: 'https://www.baidu.com',
-
-    //登录地址
-    LOGIN_URL: 'https://www.baidu.com',
-
-    //退出登录地址
-    LOGIN_OUT_URL: 'https://www.baidu.com',
-
-    //证书详情地址
-    CERT_INFO_URL: 'https://www.baidu.com',
-
-    //证书申请URL
-    CERT_APPLY_URL:"https://www.baidu.com",
+    //小程序后台接口网关
+    GATE_WAY:'https://www.baidu.com',
 
     //缓存中用户钉钉号标识
-    DD_USER_KEY: 'ddUserKey',
+    DD_USER_CODE: 'ddUserCode',
+
+    //用户登录系统之后返回token
+    DD_USER_TOKEN:'',
 
 
 
@@ -38,30 +29,9 @@ App({
     onShow(options) {
     },
 
-    /**
-    * 显示错误信息
-    * @param errMsg 要显示的错误详情
-    */
-    showError(errMsg) {
-        dd.showToast({
-            type: 'exception',
-            content: errMsg,
-            duration: 3000,
-        });
-    },
 
-    /**
-     * 显示成功的消息
-     * @param msg   要显示的详情
-     */
-    showSuccess(msg) {
-        dd.showToast({
-            type: 'success',
-            content: msg,
-            duration: 3000,
-        });
-    },
 
+    
 
     /**
      * @param url         :请求的地址
@@ -100,12 +70,11 @@ App({
                         if (errorFun != null) {
                             errorFun(res);
                         } else {
-                            showError(res.errorMessage);
-                            // dd.showToast({
-                            //     type: 'exception',
-                            //     content: res.errorMessage,
-                            //     duration: 3000,
-                            // });
+                            dd.showToast({
+                                type: 'exception',
+                                content: res.errorMessage,
+                                duration: 3000,
+                            });
                         }
                     },
                 });
@@ -118,13 +87,19 @@ App({
      * 获取用户免登标识
      * @returns 用户和系统交互的免登标识
      */
-    genUserKey() {
-        try {
-            return dd.getStorageSync({ key: this.DD_USER_KEY }).data;
-        } catch (e) {
-            showError("无法读取缓存信息，详情：" + e.errorMessage);
-        }
+    genUserCode() {
+       return this.genStorageKey(this.DD_USER_CODE);
     },
 
-   
+    /**
+     * 获取缓存信息
+     */
+    genStorageKey(keyName){
+        try {
+            return dd.getStorageSync({key: keyName}).data;
+        } catch (e) {
+            showError("无法读取缓存信息，详情：" + e.errorMessage);
+            return null;
+        }
+    }
 });

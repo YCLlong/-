@@ -131,6 +131,33 @@ function indexUrl(codeInfo,certInfo){
     return codeParam + "&" + certParam;
 }
 
+/**
+ * 处理服务器响应结果
+ */
+function dealServerResponse(res){
+    //重新定义服务器返回结果
+    var resp = {
+        success:true,
+        code:'',
+        msg:'',
+        data:{}
+    };
+    if(!res instanceof Object || res.success == undefined || res.success == null || res.success == '' || !(res.success == 'true' || res.success == 'false')){
+        resp.success = false;
+        resp.msg = '服务端返回参数不正确';
+        resp.code = 5001;
+        return resp;
+    }
+
+
+    if(res.success == 'false'){
+        resp.success = false; 
+    }
+    resp.code = res.code,
+    resp.msg = res.msg,
+    resp.data = res.data
+    return resp;
+}
 
 /**
  * 暴露方法1，不然钉钉小程序外部无法访问到
@@ -139,7 +166,8 @@ module.exports = {
     analyseQuery: analyseQuery,
     certUrl: createCertInfoUrlParam,
     codeUrl: cerateCodeInfoUrlParam,
-    indexUrl:indexUrl
+    indexUrl:indexUrl,
+    resp:dealServerResponse
 }
 
 
