@@ -30,8 +30,18 @@ Page({
             this.login();
         }
     },
+
+    /**
+     * 免密登录
+     */
+    loginNoPwd(){
+
+
+
+    },
+
+    //授权登录
     login() {
-      
         var app = getApp();
         dd.getAuthCode({
             success: function(res) {
