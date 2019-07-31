@@ -15,7 +15,6 @@ Page({
                 existCert: true,
                 certInfo: data.certInfo
             });
-
         }
     },
     onReady() {

@@ -54,8 +54,8 @@ function analyseQuery(query) {
  * 将证书对象转化成url的参数形式
  */
 function createCertInfoUrlParam(certInfo) {
-    if (certInfo == null || !certInfo instanceof Object) {
-        return "";
+    if (certInfo == null || certInfo == undefined || !certInfo instanceof Object) {
+        return "?cn=&sn=&idCode=&notBefore=&notAfter=&certStatus=";
     }
     var url = '?';
     //cn,证书名字
@@ -101,8 +101,8 @@ function createCertInfoUrlParam(certInfo) {
  * 将二维码对象封装成url形式
  */
 function cerateCodeInfoUrlParam(codeInfo) {
-    if (codeInfo == null || !codeInfo instanceof Object) {
-        return "";
+    if (codeInfo == null || codeInfo == undefined || !codeInfo instanceof Object) {
+        return "?appCode=&code=&webId=";
     }
     var url = '?';
     //appCode,应用code
@@ -132,7 +132,7 @@ function indexUrl(codeInfo, certInfo) {
     var codeParam = cerateCodeInfoUrlParam(codeInfo);
     var certParam = createCertInfoUrlParam(certInfo);
     //去掉"?"
-    certParam = certParam.subString(1, certParam.length);
+    certParam = certParam.substring(1, certParam.length);
     return codeParam + "&" + certParam;
 }
 
@@ -149,7 +149,10 @@ function dealServerResponse(res) {
         data: {}
     };
     if (!res instanceof Object || res.success == undefined || res.success == null || res.success == '' || !(res.success == 'true' || res.success == 'false')) {
-        resp.success = false;
+      
+        //TEST
+        resp.success = true;
+         // resp.success = false;
         resp.msg = '服务端返回参数不正确';
         resp.code = 5001;
         return resp;
@@ -217,10 +220,11 @@ function certInfoRequestParam(isForce, token) {
  */
 function certApplyRequestParam(applyInfo, token) {
     var param = createRequestParam('1004');
+    param.msgData.regData = {};
     param.msgData.regData.name = applyInfo.name;
-    param.msgData.regData.idcode = applyInfo.idcode;
+    param.msgData.regData.idcode = applyInfo.idCode;
     param.msgData.regData.mobile = applyInfo.mobile;
-    param.msgData.regData.pHash = applyInfo.pinHash;
+    param.msgData.regData.pHash = applyInfo.pHash;
     param.msgData.token = token;
     return param;
 }

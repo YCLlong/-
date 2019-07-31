@@ -10,10 +10,10 @@ Page({
         var userCode = app.genUserCode();
         if (userCode != null && userCode != '') {
             //免密登录
-            this.loginNoPwd(userCode, codeInfo);
+           this.loginNoPwd(userCode, codeInfo);
         } else {
-            //授权登录
-            this.login(codeInfo);
+            //授权登录  
+           this.login(codeInfo,this);
         }
     },
 
@@ -30,13 +30,16 @@ Page({
             var resData = paramUtils.resp(res);
             if (resData.success) {
                 var token = resData.data.token;
+
+                //TEST
+                token='123456789';
                 if (token == null || token == undefined) {
                     msg.errorMsg('服务器返回参数错误');
                     return;
                 }
                 //将token更新到app
                 app.DD_USER_TOKEN = token;
-
+   
                 //请求服务器，获取当前用户是否存在证书信息
                 var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
                 app.request(app.GATE_WAY, certInfoParam, function(certRes) {
@@ -69,12 +72,6 @@ Page({
                 msg.errorMsg(resData.msg);
             }
         }, null);
-        if (certInfo != null) {
-            var paramUtils = require('/utils/param.js');
-            var param = paramUtils.certUrl(certInfo);
-            url = url + param;
-        }
-
     },
 
     /**
@@ -82,23 +79,22 @@ Page({
      * @param   codeInfo    第一次登录可能存在扫码的信息
      * 
      */
-    login(codeInfo) {
+    login(codeInfo,pageObject) {
         var app = getApp();
         var msg = require('/utils/msg.js');
+        var paramUtils = require('/utils/param.js');
         dd.getAuthCode({
             success: function(res) {
                 var authCode = res.authCode;
-                var param = {
-                    //首次登录接口标识码
-                    method: '1001',
-                    code: authCode
-                };
+                var param = paramUtils.loginFirstParam(authCode);
                 app.request(app.GATE_WAY, param, function(res) {
-                    var paramUtils = require('/utils/param.js');
                     var resData = paramUtils.resp(res);
                     if (resData.success) {
                         //获取用户免密标识
                         var userCode = resData.data.dtid;
+
+                        //TEST 
+                        userCode = 'DD_YCL';
                         if (userCode == null || userCode == undefined) {
                             msg.errorMsg('服务器返回参数错误');
                             return;
@@ -114,7 +110,7 @@ Page({
                             return;
                         }
                         //登录系统
-                        this.loginNoPwd(userCode, codeInfo);
+                        pageObject.loginNoPwd(userCode, codeInfo);
                     } else {
                         msg.errorMsg(resData.msg);
                     }

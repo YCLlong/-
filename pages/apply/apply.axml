@@ -2,15 +2,15 @@
     <form onSubmit="certApply">
         <view class="section">
             <view>姓名</view>
-            <input name="name" placeholder="请输入姓名" onInput="nameInput"/>
+            <input name="name" placeholder="请输入姓名" onInput="nameInput" value="小龙"/>
             <view>身份证号码</view>
-            <input name="idCode" placeholder="请输入身份证号码" type="idcard"/>
+            <input name="idCode" placeholder="请输入身份证号码" type="idcard" value="110101199003073490"/>
             <view>手机号</view>
-            <input name="mobile" placeholder="请输入手机号" type="number" maxlength="11"/>
+            <input name="mobile" placeholder="请输入手机号" type="number" maxlength="11" value="18256079056"/>
             <view>pin码</view>
-            <input name="pin" password="true" placeholder="请输入pin码"  maxlength="6"/>
+            <input name="pin" password="true" placeholder="请输入pin码"  maxlength="6" value="123456"/>
             <view>确认pin码</view>
-             <input name="pinConfirm" password="true" placeholder="请确认pin码"  maxlength="6"/>
+             <input name="pinConfirm" password="true" placeholder="请确认pin码"  maxlength="6" value="123456"/>
             <button formType="submit"  type="primary">申请</button>
         </view>
     </form>
