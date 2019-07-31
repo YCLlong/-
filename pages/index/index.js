@@ -8,8 +8,8 @@ Page({
      * 
      */
     onLoad(query) {
-        var biz = require("/utils/biz.js");
-        var data = biz.analyseQuery(query);
+        var paramUtils = require("/utils/param.js");
+        var data = paramUtils.analyseQuery(query);
         if (data != null && data.existCert) {  
             this.setData({
                 existCert: true,

@@ -13,12 +13,12 @@ App({
     onLaunch(options) {
         // 第一次打开
         if(options.query != null){
-            var biz = require("/utils/biz.js");
-            var data = biz.analyseQuery(options.query);
+            var paramUtils = require("/utils/param.js");
+            var data = paramUtils.analyseQuery(options.query);
             debugger;
             if(data != null && data.existCode){
                 //需要处理二维码信息
-                var param = biz.codeUrl(data.codeInfo);
+                var param = paramUtils.codeUrl(data.codeInfo);
                 console.info('开始跳转' + '/pages/login/login' + param);
                 dd.redirectTo({
                     url: '/pages/login/login' + param
