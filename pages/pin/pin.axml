@@ -1,3 +1,4 @@
 <view>
+    pin码在这儿输入，贼拉好看
    <input password="true" maxlength="6" name="code" onInput="pinInput" onConfirm="pinConfirm"/>
 </view>

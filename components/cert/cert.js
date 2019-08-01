@@ -1,7 +1,6 @@
 Component({
     mixins: [],
     data: {
-        certUseToken: null
     },
     props: {
 
@@ -61,18 +60,16 @@ Component({
                 }
                 var certUseToken = respData.data.token;
                 //TEXT 模拟获取证书使用临时token
-                token = '10086';
+                certUseToken = '10086';
                 if (verifyUtils.isBlank(certUseToken)) {
                     msgUtils.errorMsg("服务器返回参数错误");
                     return;
                 }
-                //保存token
-                this.setData({
-                    certUseToken: certUseToken
-                });
-
+              
                 //跳转pin码输入界面
-
+                dd.navigateTo({
+                    url: '/pages/pin/pin?token=' + certUseToken
+                });
             }, null);
 
         }

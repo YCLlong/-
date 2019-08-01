@@ -30,9 +30,9 @@ Page({
     /**
      * 关闭pin码输入面板
      */
-    closePinPanel() {
-        this.setData({
-            pinHidden: true
+    geoBack() {
+        dd.navigateBack({
+            delta: 1
         });
     },
 
@@ -46,12 +46,12 @@ Page({
                 content: '校验中...'
             });
             this.pin(v, function(successData, pageObject) {
-                debugger
                 //服务器返回pin码正确的回调
                 dd.hideLoading();   //关闭遮罩层
-                pageObject.closePinPanel();//关闭pin码输入面板
+                pageObject.geoBack();
 
-                //其他逻辑，可以跳转到一个提示成功的界面
+                //可以跳转到一个提示成功的界面
+                
             }, function(errorData, pageObject) {
                 //服务器返回pin码错误，或者别的问题的回调
                 dd.hideLoading();

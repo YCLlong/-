@@ -124,6 +124,7 @@ function cerateCodeInfoUrlParam(codeInfo) {
     }
     return url;
 }
+
 /**
  * 在小程序中，页面之间传递参数往往通过url传递。
  * 这个函数就是跳转到主页时，将 二维码信息和证书信息 生成对应的参数格式传递
