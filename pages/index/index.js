@@ -1,7 +1,7 @@
 Page({
     data: {
         existCert: false,
-        certInfo:{}
+        certInfo: {}
     },
     /**
      * @param   query   通过类似url地址 get请求传递到页面的参数
@@ -10,20 +10,20 @@ Page({
     onLoad(query) {
         var paramUtils = require("/utils/param.js");
         var data = paramUtils.analyseQuery(query);
-        if(data == null){
+        if (data == null) {
             return;
         }
-        if (data.existCert) {  
+        if (data.existCert) {
             this.setData({
-                existCert:true,
+                existCert: true,
                 certInfo: data.certInfo
             });
         }
-        if(data.existCode){
-           this.setData({
-                existCode:true,
+        if (data.existCode) {
+            this.setData({
+                existCode: true,
                 codeInfo: data.codeInfo
-            }); 
+            });
         }
     },
     onReady() {
@@ -42,7 +42,27 @@ Page({
         // 标题被点击
     },
     onPullDownRefresh() {
-        // 页面被下拉
+        // 下拉查找证书信息
+        var paramUtils = require('/utils/param.js');
+        var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
+        app.request(app.GATE_WAY, certInfoParam, function(certRes) {
+            var respData = paramUtils.resp(certRes);
+            if (resData.success) {
+                var certInfo = respData.data.certData;
+                if (certInfo.sn == null || certInfo.sn == undefined || certInfo.sn == '') {
+                    this.setData({
+                        existCert: false,
+                        certInfo: null,
+                    });
+                }
+                this.setData({
+                    existCert: true,
+                    certInfo: certInfo,
+                });
+            } else {
+                msg.errorMsg(respData.msg);
+            }
+        }, null);
     },
     onReachBottom() {
         // 页面被拉到底部
@@ -64,10 +84,10 @@ Page({
             confirmButtonText: '同意',
             cancelButtonText: '拒绝',
             success: (result) => {
-                if(result.confirm){
+                if (result.confirm) {
                     dd.navigateTo({
                         url: '/pages/apply/apply'
-                    });   
+                    });
                 }
             },
         });
