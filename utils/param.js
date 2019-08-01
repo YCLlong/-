@@ -149,10 +149,10 @@ function dealServerResponse(res) {
         data: {}
     };
     if (!res instanceof Object || res.success == undefined || res.success == null || res.success == '' || !(res.success == 'true' || res.success == 'false')) {
-      
+
         //TEST
         resp.success = true;
-         // resp.success = false;
+        // resp.success = false;
         resp.msg = '服务端返回参数不正确';
         resp.code = 5001;
         return resp;
@@ -163,8 +163,8 @@ function dealServerResponse(res) {
         resp.success = false;
     }
     resp.code = res.code,
-        resp.msg = res.msg,
-        resp.data = res.data
+    resp.msg = res.msg,
+    resp.data = res.data
     return resp;
 }
 
@@ -267,12 +267,12 @@ module.exports = {
     codeUrl: cerateCodeInfoUrlParam,
     indexUrl: indexUrl,
     resp: dealServerResponse,
-    loginFirstParam:logInFirstRequestParam,
-    loginNoPwdParam:loginNoPwdRequestParam,
-    certInfoParam:certInfoRequestParam,
-    certApplyParam:certApplyRequestParam,
-    certUseParam:certUseRequestParam,
-    verifyPinParam:verifyPinRequestParam
+    loginFirstParam: logInFirstRequestParam,
+    loginNoPwdParam: loginNoPwdRequestParam,
+    certInfoParam: certInfoRequestParam,
+    certApplyParam: certApplyRequestParam,
+    certUseParam: certUseRequestParam,
+    verifyPinParam: verifyPinRequestParam
 }
 
 

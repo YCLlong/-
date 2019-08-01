@@ -53,8 +53,8 @@ function isMobileNo(mobileNo) {
  * @param str 字符串变量
  * @returns true|false
  */
-function isBlack(str){
-    return (str == null || str == ""  || str.trim().length == 0)
+function isBlank(str){
+    return (str == null || str== undefined || str == ''  || str.trim().length == 0)
 }
 
 /**
@@ -62,14 +62,14 @@ function isBlack(str){
  * @param str 字符串变量
  * @returns true|false
  */
-function isNotBlack(str){
-    return !(isBlack);
+function isNotBlank(str){
+    return !(isBlank);
 }
 
 
 module.exports = {
     isCardNo: isCardNo,
     isMobileNo: isMobileNo,
-    isBlack:isBlack,
-    isNotBlack:isNotBlack,
+    isBlank:isBlank,
+    isNotBlank:isNotBlank,
 }

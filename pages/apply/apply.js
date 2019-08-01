@@ -7,7 +7,7 @@ Page({
     verify(data) {
         var verify = require('/utils/verify.js');
         var msg = require('/utils/msg.js');
-        if (verify.isBlack(data.name)) {
+        if (verify.isBlank(data.name)) {
             msg.errorMsg("请您输入姓名");
             return false;
         }
@@ -21,7 +21,7 @@ Page({
             return false;
         }
 
-        if (verify.isBlack(data.pin)) {
+        if (verify.isBlank(data.pin)) {
             msg.errorMsg("pin码必须输入");
             return false;
         }
@@ -71,14 +71,14 @@ Page({
                 if (respData.success) {
                     var certInfo = respData.data.certData;
                     //拿到证书信息开始跳转到主页
-                    // certInfo = {
-                    //     cn: '123ZJCA123123',
-                    //     sn: '10086',
-                    //     idCode: '340826199909024459',
-                    //     notBefore: '2020年8月8日',
-                    //     notAfter: '2020年8月8日',
-                    //     status: 2000
-                    // };
+                    certInfo = {
+                        cn: '小龙',
+                        sn: '10086',
+                        idCode: '110101199003073490',
+                        notBefore: '2019年8月1日',
+                        notAfter: '2020年8月1日',
+                        status: 2000
+                    };
 
                     var url = "/pages/index/index" + paramUtils.certUrl(certInfo);
                     //跳转到主页

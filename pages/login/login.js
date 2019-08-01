@@ -8,19 +8,28 @@ Page({
         //页面加载
         var app = getApp();
         var userCode = app.genUserCode();
+        userCode = null;
         if (userCode != null && userCode != '') {
             //免密登录
-           this.loginNoPwd(userCode, codeInfo);
+            this.loginNoPwd(userCode, codeInfo);
         } else {
             //授权登录  
-           this.login(codeInfo,this);
+            this.loginAuth(codeInfo, this);
         }
+    },
+
+    //点击登录按钮进行授权登录
+    login() {
+        this.loginAuth(null, this);
     },
 
     /**
      * 免密登录
      */
     loginNoPwd(userCode, codeInfo) {
+        dd.showLoading({
+            content: '登录中...'
+        });
         var app = getApp();
         var paramUtils = require('/utils/param.js');
         var msg = require('/utils/msg.js');
@@ -31,31 +40,32 @@ Page({
             if (resData.success) {
                 var token = resData.data.token;
 
-                //TEST
-                token='123456789';
+                //TEST  模拟token
+                token = '123456789';
                 if (token == null || token == undefined) {
                     msg.errorMsg('服务器返回参数错误');
                     return;
                 }
                 //将token更新到app
                 app.DD_USER_TOKEN = token;
-   
+
                 //请求服务器，获取当前用户是否存在证书信息
                 var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
                 app.request(app.GATE_WAY, certInfoParam, function(certRes) {
                     var respData = paramUtils.resp(certRes);
+                    dd.hideLoading();
                     if (resData.success) {
                         var certInfo = respData.data.certData;
+                        //TEST  模拟返回证书信息
+                        certInfo = {
+                            cn: '123ZJCA123123',
+                            sn: '10086',
+                            idCode: '340826199909024459',
+                            notBefore: '2020年8月8日',
+                            notAfter: '2020年8月8日',
+                            status: 2000
+                        };
                         //拿到证书信息开始跳转到主页
-                        // certInfo = {
-                        //     cn: '123ZJCA123123',
-                        //     sn: '10086',
-                        //     idCode: '340826199909024459',
-                        //     notBefore: '2020年8月8日',
-                        //     notAfter: '2020年8月8日',
-                        //     status: 2000
-                        // };
-
                         var url = "/pages/index/index" + paramUtils.indexUrl(codeInfo, certInfo);
                         //跳转到主页
                         dd.reLaunch({
@@ -65,13 +75,16 @@ Page({
                         msg.errorMsg(respData.msg);
                     }
 
-                }, null);
-
-
+                }, function(res) {
+                    dd.hideLoading();
+                });
             } else {
+                dd.hideLoading();
                 msg.errorMsg(resData.msg);
             }
-        }, null);
+        }, function(res) {
+            dd.hideLoading();
+        });
     },
 
     /**
@@ -79,7 +92,7 @@ Page({
      * @param   codeInfo    第一次登录可能存在扫码的信息
      * 
      */
-    login(codeInfo,pageObject) {
+    loginAuth(codeInfo, pageObject) {
         var app = getApp();
         var msg = require('/utils/msg.js');
         var paramUtils = require('/utils/param.js');
@@ -93,7 +106,7 @@ Page({
                         //获取用户免密标识
                         var userCode = resData.data.dtid;
 
-                        //TEST 
+                        //TEST 模拟用户免登标识
                         userCode = 'DD_YCL';
                         if (userCode == null || userCode == undefined) {
                             msg.errorMsg('服务器返回参数错误');

@@ -19,7 +19,6 @@ App({
             if(data != null && data.existCode){
                 //需要处理二维码信息
                 var param = paramUtils.codeUrl(data.codeInfo);
-                console.info('开始跳转' + '/pages/login/login' + param);
                 dd.redirectTo({
                     url: '/pages/login/login' + param
                 })
@@ -38,8 +37,9 @@ App({
      * @param param       :请求参数，param json对象 
      * @param successFun  :访问成功回调函数,注意，这个函数内不能再调用别的函数，钉钉不支持
      * @param errorFun    :请求失败回调函数，如果是null,那么会打印默认的错误信息 @function showError ，这个函数内不能再调用别的函数。钉钉不支持
+     * @param pointer     :调用者对象指针
      */
-    request(url, param, successFun, errorFun) {
+    request(url, param, successFun, errorFun,pointer) {
         dd.getNetworkType({
             success: (res) => {
                 if (!res.networkAvailable) {

@@ -10,11 +10,21 @@ Page({
     onLoad(query) {
         var paramUtils = require("/utils/param.js");
         var data = paramUtils.analyseQuery(query);
-        if (data != null && data.existCert) {  
+        if(data == null){
+            return;
+        }
+        if (data.existCert) {  
             this.setData({
-                existCert: true,
+                existCert:true,
                 certInfo: data.certInfo
             });
+        }
+        if(data.existCode){
+           this.setData({
+                existCode:true,
+                codeInfo: data.codeInfo
+            }); 
+            console.info("appCode:" + this.codeInfo.appCode + ",code:" + this.codeInfo.code + ",webId:" + this.codeInfo.webId);
         }
     },
     onReady() {
