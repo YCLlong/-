@@ -24,7 +24,6 @@ Page({
                 existCode:true,
                 codeInfo: data.codeInfo
             }); 
-            console.info("appCode:" + this.codeInfo.appCode + ",code:" + this.codeInfo.code + ",webId:" + this.codeInfo.webId);
         }
     },
     onReady() {

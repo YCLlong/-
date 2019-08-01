@@ -1,8 +1,4 @@
-<import src="/templete/pin/pin"/>
 <view>
-    <view a:if="{{!pinHidden}}">
-        <template is="pin"></template>
-    </view>
     <text>证书序列号: {{certInfo.sn}}\n\n</text>
     <text>证书名称: {{certInfo.cn}}\n\n</text>
     <text>证件号码: {{certInfo.idCode}} \n\n</text>

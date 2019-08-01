@@ -1,10 +1,10 @@
 {
-  "pages": [    
+  "pages": [
     "pages/login/login",
     "pages/index/index",
     "pages/apply/apply",
-     "pages/error/error"
-   
+    "pages/error/error",
+    "pages/pin/pin"
   ],
   "window": {
     "defaultTitle": "云证书"

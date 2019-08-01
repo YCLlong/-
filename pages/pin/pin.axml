@@ -1,0 +1,3 @@
+<view>
+   <input password="true" maxlength="6" name="code" onInput="pinInput" onConfirm="pinConfirm"/>
+</view>

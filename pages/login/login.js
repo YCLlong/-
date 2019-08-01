@@ -8,7 +8,6 @@ Page({
         //页面加载
         var app = getApp();
         var userCode = app.genUserCode();
-        userCode = null;
         if (userCode != null && userCode != '') {
             //免密登录
             this.loginNoPwd(userCode, codeInfo);

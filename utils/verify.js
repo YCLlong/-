@@ -54,7 +54,7 @@ function isMobileNo(mobileNo) {
  * @returns true|false
  */
 function isBlank(str){
-    return (str == null || str== undefined || str == ''  || str.trim().length == 0)
+    return (str == null || str== undefined || str == ''  || str.trim().length == 0);
 }
 
 /**

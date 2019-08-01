@@ -11,14 +11,19 @@ App({
 
 
     onLaunch(options) {
+         //TEST 测试扫码
+         options.query = 1;
         // 第一次打开
         if(options.query != null){
             var paramUtils = require("/utils/param.js");
             var data = paramUtils.analyseQuery(options.query);
-            debugger;
+            //TEST 测试扫码
+            data.existCode = true;
             if(data != null && data.existCode){
                 //需要处理二维码信息
                 var param = paramUtils.codeUrl(data.codeInfo);
+                //TEXT 测试扫码
+                param =  "?appCode=123&code=459&webId=789";
                 dd.redirectTo({
                     url: '/pages/login/login' + param
                 })
