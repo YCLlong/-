@@ -70,7 +70,7 @@ Page({
                 var respData = paramUtils.resp(certRes);
                 if (respData.success) {
                     var certInfo = respData.data.certData;
-                    //拿到证书信息开始跳转到主页
+                    //TEST 模拟获取用户信息
                     certInfo = {
                         cn: '小龙',
                         sn: '10086',

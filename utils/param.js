@@ -149,11 +149,17 @@ function dealServerResponse(res) {
         msg: '',
         data: {}
     };
-    if (!res instanceof Object || res.success == undefined || res.success == null || res.success == '' || !(res.success == 'true' || res.success == 'false')) {
 
-        //TEST
-        resp.success = true;
-        // resp.success = false;
+    //TEST  模拟用户token超时
+    // res.success = 'false';
+    // res.code = '4003';
+
+    //TEST 模拟服务响应正确
+    res.success = 'true';
+
+
+    if (!res instanceof Object || res.success == undefined || res.success == null || res.success == '' || !(res.success == 'true' || res.success == 'false')) {
+        resp.success = false;
         resp.msg = '服务端返回参数不正确';
         resp.code = 5001;
         return resp;
@@ -161,11 +167,27 @@ function dealServerResponse(res) {
 
 
     if (res.success == 'false') {
+        if (res.code != undefined && res.code != null && res.code != '') {
+            if (res.code == '4003') {
+                //本来想给用户取消重新登录的操作，无奈钉钉没有提供退出小程序的方法
+                dd.alert({
+                    title: '温馨提示',
+                    content: '您的登录身份已过期，需要重新登录',
+                    buttonText: '重新登录',
+                    success: () => {
+                        dd.reLaunch({
+                            url: '/pages/login/login'
+                        });
+                        return;
+                    },
+                });
+            }
+        }
         resp.success = false;
     }
     resp.code = res.code,
-    resp.msg = res.msg,
-    resp.data = res.data
+        resp.msg = res.msg,
+        resp.data = res.data
     return resp;
 }
 
