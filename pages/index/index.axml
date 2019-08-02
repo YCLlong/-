@@ -1,10 +1,7 @@
 <view>
-    <!-- 用户已有云证书 -->
+    <!-- 用户已有证书 -->
     <view a:if = "{{existCert}}">
-        <view a:if = "{{certInfo.status > 0}}">
-            <cert certInfo = "{{certInfo}}" codeInfo = "{{codeInfo}}"/>
-        </view>
-        <view a:else>
+        <view a:if = "{{certInfo.status == 0}}">
              <!-- 等待签发的界面。下拉查询最新状态的证书信息 -->
             证书正在签发中。。。
         </view>

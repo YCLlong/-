@@ -5,21 +5,25 @@ Page({
         //第一次登录可能只有二维码信息
         var data = paramUtils.analyseQuery(query);
         var codeInfo = data.codeInfo;
+         this.setData({
+            codeInfo:codeInfo
+        });
         //页面加载
         var app = getApp();
         var userCode = app.genUserCode();
         if (userCode != null && userCode != '') {
             //免密登录
             this.loginNoPwd(userCode, codeInfo);
-        } else {
-            //授权登录  
-            this.loginAuth(codeInfo, this);
         }
+        // } else {
+        //     //授权登录  
+        //     this.loginAuth(codeInfo, this);
+        // }
     },
 
     //点击登录按钮进行授权登录
     login() {
-        this.loginAuth(null, this);
+        this.loginAuth(this.data.codeInfo, this);
     },
 
     /**
@@ -64,6 +68,7 @@ Page({
                             notAfter: '2020年8月8日',
                             status: 2000
                         };
+                        //certInfo = null;
                         //拿到证书信息开始跳转到主页
                         var url = "/pages/index/index" + paramUtils.indexUrl(codeInfo, certInfo);
                         //跳转到主页
@@ -83,6 +88,7 @@ Page({
             }
         }, function(res) {
             dd.hideLoading();
+            msg.errorMsg(res.errorMessage);
         });
     },
 
@@ -127,9 +133,6 @@ Page({
                         msg.errorMsg(resData.msg);
                     }
                 }, null);
-            },
-            fail: function(err) {
-                msg.errorMsg('授权失败');
             }
         });
     },

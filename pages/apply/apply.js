@@ -56,8 +56,12 @@ Page({
             mobile: data.mobile,
             pHash: pinHash
         };
+        
         //封装申请证书的参数
         var param = paramUtils.certApplyParam(applyInfo, app.DD_USER_TOKEN);
+        dd.showLoading({
+            content: '正在申请证书，请稍候...'
+        });
         app.request(app.GATE_WAY, param, function(res) {
             var respData = paramUtils.resp(res);
             if (!respData.success) {
@@ -67,6 +71,7 @@ Page({
             //请求服务器，获取当前用户的证书信息
             var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
             app.request(app.GATE_WAY, certInfoParam, function(certRes) {
+                dd.hideLoading();
                 var respData = paramUtils.resp(certRes);
                 if (respData.success) {
                     var certInfo = respData.data.certData;
@@ -86,6 +91,7 @@ Page({
                         url: url
                     });
                 } else {
+                    dd.hideLoading();
                     msg.errorMsg(respData.msg);
                 }
             }, null);

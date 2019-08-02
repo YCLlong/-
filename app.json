@@ -4,9 +4,11 @@
     "pages/index/index",
     "pages/apply/apply",
     "pages/error/error",
-    "pages/pin/pin"
+    "pages/pin/pin",
+    "pages/cert/cert"
   ],
   "window": {
-    "defaultTitle": "云证书"
+    "defaultTitle": "云证书",
+    "pullRefresh": true
   }
 }

@@ -3,7 +3,71 @@
  * 比如封装参数，解析参数
  */
 
+/**
+ * 将参数解析成证书信息对象
+ */
+function analyseCert(query) {
+    var certInfo = {}
+    if (query.certStatus == null || query.cn == null || query.cn == '') {
+        certInfo = null;
+    } else {
+        //封装证书信息
+        certInfo.cn = query.cn;
+        certInfo.status = query.certStatus;
 
+        if (query.sn == undefined) {
+            certInfo.sn = '';
+        } else {
+            certInfo.sn = query.sn;
+        }
+        if (query.idCode == undefined) {
+            certInfo.idCode = '';
+        } else {
+            certInfo.idCode = query.idCode;
+        }
+
+        if (query.notBefore == undefined) {
+            certInfo.notBefore = '';
+        } else {
+            certInfo.notBefore = query.notBefore;
+        }
+
+        if (query.notAfter == undefined) {
+            certInfo.notAfter = '';
+        } else {
+            certInfo.notAfter = query.notAfter;
+        }
+    }
+    return certInfo;
+}
+
+/**
+ * 将参数解析成二维码信息对象
+ */
+function analyseCode(query) {
+    var codeInfo = {};
+    //解析二维码信息
+    if (query.appCode == null || query.appCode == '') {
+        codeInfo = null;
+    } else {
+        //应用方编码
+        codeInfo.appCode = query.appCode
+
+        //挑战码
+        if (query.code == undefined) {
+            codeInfo.code = '';
+        } else {
+            codeInfo.code = query.code;
+        }
+
+        //页面标识
+        if (query.webId == undefined) {
+            codeInfo.webId = '';
+        } else {
+            codeInfo.webId = query.webId;
+        }
+    }
+}
 /**
  * 封装地址参数
  */
@@ -13,39 +77,22 @@ function analyseQuery(query) {
         existCode: false,    //是否存在二维码信息
     }
     if (query == null) {
+        data.certInfo = null;
+        data.codeInfo = null;
         return data;
     }
     //解析证书信息
-    if (query.certStatus == null || query.cn == null || query.cn == '') {
-        data.certInfo = null;
-    } else {
-        //封装证书信息
+    var certInfo = analyseCert(query);
+    if (certInfo != null) {
         data.existCert = true;
-        data.certInfo = {
-            cn: query.cn,
-            sn: query.sn,
-            idCode: query.idCode,
-            notBefore: query.notBefore,
-            notAfter: query.notAfter,
-            status: query.certStatus
-        };
+        data.certInfo = certInfo;
     }
 
     //解析二维码信息
-    if (query.appCode == null || query.appCode == '') {
-        data.codeInfo = null;
-    } else {
+    var codeInfo = analyseCode(query);
+    if (codeInfo != null) {
         data.existCode = true;
-        data.codeInfo = {
-            //应用方编码
-            appCode: query.appCode,
-
-            //挑战码
-            code: query.code,
-
-            //页面标识
-            webId: query.webId,
-        }
+        data.codeInfo = codeInfo;
     }
     return data;
 }
@@ -185,9 +232,23 @@ function dealServerResponse(res) {
         }
         resp.success = false;
     }
-    resp.code = res.code,
-        resp.msg = res.msg,
+    if (res.code == undefined) {
+        resp.code == '';
+    } else {
+        resp.code = res.code;
+    }
+
+    if (res.msg == undefined) {
+        resp.msg == '';
+    } else {
+        resp.msg = res.msg;
+    }
+
+    if (res.data == undefined) {
+        resp.data == {};
+    } else {
         resp.data = res.data
+    }
     return resp;
 }
 
@@ -285,6 +346,8 @@ function verifyPinRequestParam(token, pinHash) {
  * 暴露方法1，不然钉钉小程序外部无法访问到
  */
 module.exports = {
+    analyseCert: analyseCert,
+    analyseCode: analyseCode,
     analyseQuery: analyseQuery,
     certUrl: createCertInfoUrlParam,
     codeUrl: cerateCodeInfoUrlParam,
@@ -297,8 +360,3 @@ module.exports = {
     certUseParam: certUseRequestParam,
     verifyPinParam: verifyPinRequestParam
 }
-
-
-
-
-
