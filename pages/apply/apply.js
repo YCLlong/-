@@ -3,6 +3,9 @@ Page({
 
     },
     onLoad() { },
+    onPullDownRefresh() {
+        dd.stopPullDownRefresh();
+    },
 
     verify(data) {
         var verify = require('/utils/verify.js');

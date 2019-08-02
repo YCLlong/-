@@ -44,6 +44,7 @@ Page({
         // 标题被点击
     },
     onPullDownRefresh() {
+        debugger;
         // 下拉更新证书信息
         var app = getApp();
         var msg = require('/utils/msg.js');
@@ -154,6 +155,7 @@ Page({
             this.certUseApply(this.data.codeInfo);
             return;
         }else if(this.data.existCert){
+            var paramUtils = require("/utils/param.js");
             dd.redirectTo({
                 url: '/pages/cert/cert' + paramUtils.certUrl(this.data.certInfo)
             });

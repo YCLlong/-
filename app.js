@@ -1,6 +1,6 @@
 App({
     //小程序后台接口网关
-    GATE_WAY:'http://www.baidu.com',
+    GATE_WAY:'https://www.baidu.com',
 
     //缓存中用户钉钉号标识
     DD_USER_CODE: 'ddUserCode',

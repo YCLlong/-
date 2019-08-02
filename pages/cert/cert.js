@@ -14,6 +14,9 @@ Page({
             });
         }
     },
+     onPullDownRefresh() {
+        dd.stopPullDownRefresh();
+     },
     /**
      * 扫二维码
      */
