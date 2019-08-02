@@ -67,11 +67,12 @@ function analyseCode(query) {
             codeInfo.webId = query.webId;
         }
     }
+    return codeInfo;
 }
 /**
  * 封装地址参数
  */
-function analyseQuery(query) {
+function analyseQuery(query) {   
     var data = {
         existCert: false,    //是否存在证书信息
         existCode: false,    //是否存在二维码信息

@@ -1,6 +1,6 @@
 App({
     //小程序后台接口网关
-    GATE_WAY:'https://www.baidu.com',
+    GATE_WAY:'http://www.baidu.com',
 
     //缓存中用户钉钉号标识
     DD_USER_CODE: 'ddUserCode',
@@ -11,6 +11,11 @@ App({
 
 
     onLaunch(options) {
+        // var param = '?appCode=123'
+        // dd.redirectTo({
+        //     url: '/pages/login/login' + param
+        // });
+        // return;
         // 第一次打开
         if(options.query != null){
             var paramUtils = require("/utils/param.js");
@@ -20,7 +25,7 @@ App({
                 var param = paramUtils.codeUrl(data.codeInfo);
                 dd.redirectTo({
                     url: '/pages/login/login' + param
-                })
+                });
             }
         }
     },
@@ -49,11 +54,11 @@ App({
                     });
                     return;
                 }
-                // if(param != null && param != undefined){
-                //     param = JSON.stringify(param);
-                // }else{
-                       //param = '';
-                //}
+                if(param != null && param != undefined){
+                    param = JSON.stringify(param);
+                }else{
+                       param = '';
+                }
                 dd.httpRequest({
                     headers: {
                         //"Content-Type": "application/json"

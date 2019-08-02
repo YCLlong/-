@@ -25,14 +25,8 @@ Page({
                 codeInfo: data.codeInfo
             });
         }
-        //如果存在code，且存在二维码信息，直接跳转到pin码输入界面
-        if(data.existCert && data.existCode){
-            this.certUseApply(data.codeInfo);
-        }else if(data.existCert){
-            dd.redirectTo({
-                url: '/pages/cert/cert' + paramUtils.certUrl(data.certInfo)
-            });
-        }
+        //页面路由
+        this.route();
     },
     onReady() {
         // 页面加载完成
@@ -50,35 +44,37 @@ Page({
         // 标题被点击
     },
     onPullDownRefresh() {
-        debugger
         // 下拉更新证书信息
         var app = getApp();
         var msg = require('/utils/msg.js');
         var paramUtils = require('/utils/param.js');
         var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
+        var pageObject = this;
         app.request(app.GATE_WAY, certInfoParam, function(certRes) {
             dd.stopPullDownRefresh();
             var respData = paramUtils.resp(certRes);
-            if (resData.success) {
+            if (respData.success) {
                 var certInfo = respData.data.certData;
-                if (certInfo == null || certInfo.status == null || certInfo.status == '') {
-                    this.setData({
+                if (certInfo== undefined || certInfo == null || certInfo.status == null || certInfo.status == '') {
+                    pageObject.setData({
                         existCert: false,
                         certInfo: null,
                     });
                 } else {
-                    this.setData({
+                    pageObject.setData({
                         existCert: true,
                         certInfo: certInfo,
                     });
                 }
+               
+                pageObject.route();
             } else {
                 msg.errorMsg(respData.msg);
             }
         }, function(res){
             dd.stopPullDownRefresh();
             msg.errorMsg(res.errorMessage);
-        });
+        },pageObject);
     },
     onReachBottom() {
         // 页面被拉到底部
@@ -121,6 +117,7 @@ Page({
         var verifyUtils = require("/utils/verify.js");
         var msgUtils = require("/utils/msg.js")
         if (codeInfo == null || codeInfo == undefined || verifyUtils.isBlank(codeInfo.appCode) || verifyUtils.isBlank(codeInfo.webId) || verifyUtils.isBlank(codeInfo.code)) {
+            //TODO 这里要跳转到错误页面，错误页面需要指定跳转到证书界面的Url
             msgUtils.errorMsg("我们无法处理这个二维码");
             return;
         }
@@ -146,5 +143,20 @@ Page({
                 url: '/pages/pin/pin?token=' + certUseToken
             });
         }, null);
+    },
+
+    /**
+     * 页面逻辑跳转
+     */
+    route(){
+         //如果存在code，且存在二维码信息，直接跳转到pin码输入界面
+        if(this.data.existCert && this.data.existCode){
+            this.certUseApply(this.data.codeInfo);
+            return;
+        }else if(this.data.existCert){
+            dd.redirectTo({
+                url: '/pages/cert/cert' + paramUtils.certUrl(this.data.certInfo)
+            });
+        }
     }
 });

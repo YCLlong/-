@@ -3,8 +3,7 @@ Page({
     onLoad(query) {
         var paramUtils = require('/utils/param.js');
         //第一次登录可能只有二维码信息
-        var data = paramUtils.analyseQuery(query);
-        var codeInfo = data.codeInfo;
+        var codeInfo = paramUtils.analyseCode(query);
          this.setData({
             codeInfo:codeInfo
         });
