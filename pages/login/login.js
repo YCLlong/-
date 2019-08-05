@@ -46,7 +46,7 @@ Page({
                 var token = resData.data.token;
 
                 //TEST  模拟token
-                token = '123456789';
+                //token = '123456789';
                 if (token == null || token == undefined) {
                     msg.errorMsg('服务器返回参数错误');
                     return;
@@ -62,14 +62,14 @@ Page({
                     if (resData.success) {
                         var certInfo = respData.data.certData;
                         //TEST  模拟返回证书信息
-                        certInfo = {
-                            cn: '123ZJCA123123',
-                            sn: '10086',
-                            idCode: '340826199909024459',
-                            notBefore: '2020年8月8日',
-                            notAfter: '2020年8月8日',
-                            status: 2000
-                        };
+                        // certInfo = {
+                        //     cn: '123ZJCA123123',
+                        //     sn: '10086',
+                        //     idCode: '340826199909024459',
+                        //     notBefore: '2020年8月8日',
+                        //     notAfter: '2020年8月8日',
+                        //     status: 2000
+                        // };
                         //certInfo = null;
                         //拿到证书信息开始跳转到主页
                         var url = "/pages/index/index" + paramUtils.indexUrl(codeInfo, certInfo);
@@ -114,7 +114,7 @@ Page({
                         var userCode = resData.data.dtid;
 
                         //TEST 模拟用户免登标识
-                        userCode = 'DD_YCL';
+                        //userCode = 'DD_YCL';
                         if (userCode == null || userCode == undefined) {
                             msg.errorMsg('服务器返回参数错误');
                             return;

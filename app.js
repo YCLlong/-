@@ -1,6 +1,6 @@
 App({
     //小程序后台接口网关
-    GATE_WAY:'https://www.baidu.com',
+    GATE_WAY:'http://192.168.0.231:8080/spInterface/message/msg/GateWay.htm',
 
     //缓存中用户钉钉号标识
     DD_USER_CODE: 'ddUserCode',
@@ -54,25 +54,20 @@ App({
                     });
                     return;
                 }
-                if(param != null && param != undefined){
-                    param = JSON.stringify(param);
-                }else{
-                       param = '';
+                if(param == null || param == undefined){
+                     param = {};
                 }
                 dd.httpRequest({
-                    headers: {
-                        //"Content-Type": "application/json"
-                    },
                     url: url,
                     method: 'POST',
-                    timeout: 3000,
+                    timeout: 6000,
                     data: param,
-                    //dataType: 'json',
-                    dataType: 'text',
+                    dataType: 'json',
                     success: function(res) {
                         successFun(res);
                     },
                     fail: function(res) {
+                        dd.hideLoading();
                         if (errorFun != null) {
                             errorFun(res);
                         } else {
@@ -82,7 +77,7 @@ App({
                                 duration: 3000,
                             });
                         }
-                    },
+                    }
                 });
             }
         });

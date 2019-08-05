@@ -203,20 +203,20 @@ function dealServerResponse(res) {
     // res.code = '4003';
 
     //TEST 模拟服务响应正确
-    res.success = 'true';
+    //res.success = 'true';
 
-
-    if (!res instanceof Object || res.success == undefined || res.success == null || res.success == '' || !(res.success == 'true' || res.success == 'false')) {
+    debugger
+    if (!res instanceof Object || res.data == undefined || res.data == null ||  res.data.success == undefined || res.data.success == null || res.data.success == '' || !(res.data.success == 'true' || res.data.success == 'false')) {
         resp.success = false;
         resp.msg = '服务端返回参数不正确';
         resp.code = 5001;
         return resp;
     }
 
-
-    if (res.success == 'false') {
-        if (res.code != undefined && res.code != null && res.code != '') {
-            if (res.code == '4003') {
+    var data = res.data;
+    if (data.success == 'false') {
+        if (data.code != undefined && data.code != null && data.code != '') {
+            if (data.code == '4003') {
                 //本来想给用户取消重新登录的操作，无奈钉钉没有提供退出小程序的方法
                 dd.alert({
                     title: '温馨提示',
@@ -233,22 +233,32 @@ function dealServerResponse(res) {
         }
         resp.success = false;
     }
-    if (res.code == undefined) {
+
+    if (data.code == undefined) {
         resp.code == '';
     } else {
-        resp.code = res.code;
+        resp.code = data.code;
     }
 
-    if (res.msg == undefined) {
+    if (data.msg == undefined) {
         resp.msg == '';
     } else {
-        resp.msg = res.msg;
+        resp.msg = data.msg;
     }
 
-    if (res.data == undefined) {
+    if (data.data == undefined || data.data == null || data.data =='') {
         resp.data == {};
     } else {
-        resp.data = res.data
+        //转化成json对象
+        try{
+            resp.data =  JSON.parse(data.data);
+        }catch(e){
+            resp.success = false;
+            resp.msg = '服务端返回参数不正确';
+            resp.code = 5001;
+            return resp;
+        }
+        
     }
     return resp;
 }
@@ -273,6 +283,7 @@ function createRequestParam(methodCode) {
 function logInFirstRequestParam(authCode) {
     var param = createRequestParam('1001');
     param.msgData.code = authCode;
+    param.msgData = JSON.stringify(param.msgData);
     return param;
 }
 
@@ -283,6 +294,7 @@ function logInFirstRequestParam(authCode) {
 function loginNoPwdRequestParam(dtid) {
     var param = createRequestParam('1002');
     param.msgData.dtid = dtid;
+    param.msgData = JSON.stringify(param.msgData);
     return param;
 }
 
@@ -295,6 +307,7 @@ function certInfoRequestParam(isForce, token) {
     var param = createRequestParam('1003');
     param.msgData.isForce = isForce;
     param.msgData.token = token;
+    param.msgData = JSON.stringify(param.msgData);
     return param;
 }
 
@@ -309,8 +322,10 @@ function certApplyRequestParam(applyInfo, token) {
     param.msgData.regData.name = applyInfo.name;
     param.msgData.regData.idcode = applyInfo.idCode;
     param.msgData.regData.mobile = applyInfo.mobile;
-    param.msgData.regData.pHash = applyInfo.pHash;
+    param.msgData.regData = JSON.stringify(param.msgData.regData);
+    param.msgData.pHash = applyInfo.pHash;
     param.msgData.token = token;
+    param.msgData = JSON.stringify(param.msgData);
     return param;
 }
 
@@ -327,6 +342,7 @@ function certUseRequestParam(appCode, code, webId, token) {
     param.msgData.code = code;
     param.msgData.webId = webId;
     param.msgData.token = token;
+    param.msgData = JSON.stringify(param.msgData);
     return param;
 }
 
@@ -339,6 +355,7 @@ function verifyPinRequestParam(token, pinHash) {
     var param = createRequestParam('1006');
     param.msgData.token = token;
     param.msgData.pHash = pinHash;
+    param.msgData = JSON.stringify(param.msgData);
     return param;
 }
 
