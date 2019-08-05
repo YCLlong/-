@@ -44,7 +44,6 @@ Page({
         // 标题被点击
     },
     onPullDownRefresh() {
-        debugger;
         // 下拉更新证书信息
         var app = getApp();
         var msg = require('/utils/msg.js');

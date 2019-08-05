@@ -19,6 +19,9 @@ Page({
         //     this.loginAuth(codeInfo, this);
         // }
     },
+     onPullDownRefresh() {
+        dd.stopPullDownRefresh();
+     },
 
     //点击登录按钮进行授权登录
     login() {
