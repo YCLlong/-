@@ -3,6 +3,11 @@ Page({
     onLoad(query) {
         var paramUtils = require('/utils/param.js');
         //第一次登录可能只有二维码信息
+        query={
+            appCode:'20190808155240KH2',
+            webId:'1',
+            code:'2'
+        }
         var codeInfo = paramUtils.analyseCode(query);
          this.setData({
             codeInfo:codeInfo
@@ -58,19 +63,10 @@ Page({
                 var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
                 app.request(app.GATE_WAY, certInfoParam, function(certRes) {
                     var respData = paramUtils.resp(certRes);
-                    dd.hideLoading();
-                    if (resData.success) {
-                        var certInfo = respData.data.certData;
-                        //TEST  模拟返回证书信息
-                        // certInfo = {
-                        //     cn: '123ZJCA123123',
-                        //     sn: '10086',
-                        //     idCode: '340826199909024459',
-                        //     notBefore: '2020年8月8日',
-                        //     notAfter: '2020年8月8日',
-                        //     status: 2000
-                        // };
-                        //certInfo = null;
+                 //   dd.hideLoading();
+                    if (respData.success) {
+                        //dd.hideLoading();
+                        var certInfo = respData.data;
                         //拿到证书信息开始跳转到主页
                         var url = "/pages/index/index" + paramUtils.indexUrl(codeInfo, certInfo);
                         //跳转到主页
@@ -82,10 +78,10 @@ Page({
                     }
 
                 }, function(res) {
-                    dd.hideLoading();
+                   // dd.hideLoading();
                 });
             } else {
-                dd.hideLoading();
+                //dd.hideLoading();
                 msg.errorMsg(resData.msg);
             }
         }, function(res) {

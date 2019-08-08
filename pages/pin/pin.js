@@ -1,6 +1,10 @@
 Page({
     data: {},
-    onLoad() { },
+    onLoad(query) {
+        this.setData({
+            token:query.token
+        });
+     },
     
     /**
      * 校验pin码
@@ -14,13 +18,17 @@ Page({
         var msg = require("/utils/msg.js");
         var shaUtils = require("/utils/sha256.js")
         var pinHash = shaUtils.sha256(pinCode);
-
-        let param = paramUtils.verifyPinParam(this.certUseToken, pinHash);
+        let useToken = this.data.token;
+        if(useToken == undefined || useToken == null || useToken == ''){
+            msg.errorMsg('丢失的token');
+            return;
+        }
+        let param = paramUtils.verifyPinParam(useToken, pinHash);
         let pageObject = this;
         app.request(app.GATE_WAY, param, function(res) {
             var respData = paramUtils.resp(res);
             //TEST 模拟pin码结果
-            respData.success = true;
+            //respData.success = true;
 
             if (!respData.success) {
                 if (errorFun == null) {

@@ -5,4 +5,18 @@ function Error(code,msg){
 
 const TOKEN_ERROR  = new Error(4003,'token失效'); 
 
+const CERT_APPLY_ERROR  = new Error(4005,'证书申请失败'); 
 const SERVER_RESPONSE_PARAM_ERROR  = new Error(5001,'服务端响应参数不正确'); 
+
+
+function gotoErrorPage(msg,tip){
+    if(msg == undefined)
+    dd.redirectTo({
+        url: 'new_page?count=100'
+    });
+
+}
+module.exports = {
+    errorMsg: showError,
+    successMsg: showSuccess
+}

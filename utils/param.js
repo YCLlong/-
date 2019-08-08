@@ -12,7 +12,7 @@ function analyseCert(query) {
         certInfo = null;
     } else {
         //封装证书信息
-        certInfo.cn = query.cn;
+        certInfo.name = query.cn;
         certInfo.status = query.certStatus;
 
         if (query.sn == undefined) {
@@ -21,9 +21,9 @@ function analyseCert(query) {
             certInfo.sn = query.sn;
         }
         if (query.idCode == undefined) {
-            certInfo.idCode = '';
+            certInfo.code = '';
         } else {
-            certInfo.idCode = query.idCode;
+            certInfo.code = query.idCode;
         }
 
         if (query.notBefore == undefined) {
@@ -108,8 +108,8 @@ function createCertInfoUrlParam(certInfo) {
     var url = '?';
     //cn,证书名字
     url = url + "cn="
-    if (certInfo.cn != null && certInfo.cn != undefined) {
-        url = url + certInfo.cn;
+    if (certInfo.name != null && certInfo.name != undefined) {
+        url = url + certInfo.name;
     }
 
     //sn,证书序列号
@@ -118,10 +118,10 @@ function createCertInfoUrlParam(certInfo) {
         url = url + certInfo.sn;
     }
 
-    //idCode,身份证号
+    //身份证号
     url = url + "&idCode="
-    if (certInfo.idCode != null && certInfo.idCode != undefined) {
-        url = url + certInfo.idCode;
+    if (certInfo.code != null && certInfo.code != undefined) {
+        url = url + certInfo.code;
     }
 
     //notBefore,证书有效起始时间
@@ -336,11 +336,11 @@ function certApplyRequestParam(applyInfo, token) {
  * @param webId   页面标识
  * @param token   登录后获得的token,时效30分钟的后续调用凭证
  */
-function certUseRequestParam(appCode, code, webId, token) {
+function certUseRequestParam(codeInfo, token) {
     var param = createRequestParam('1005');
-    param.msgData.appCode = appCode;
-    param.msgData.code = code;
-    param.msgData.webId = webId;
+    param.msgData.appCode = codeInfo.appCode;
+    param.msgData.code = codeInfo.code;
+    param.msgData.webId = codeInfo.webId;
     param.msgData.token = token;
     param.msgData = JSON.stringify(param.msgData);
     return param;

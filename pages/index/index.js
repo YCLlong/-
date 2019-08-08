@@ -131,8 +131,6 @@ Page({
                 return;
             }
             var certUseToken = respData.data.token;
-            //TEXT 模拟获取证书使用临时token
-            certUseToken = '10086';
             if (verifyUtils.isBlank(certUseToken)) {
                 msgUtils.errorMsg("服务器返回参数错误");
                 return;

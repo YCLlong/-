@@ -80,9 +80,9 @@ Page({
                     var certInfo = respData.data.certData;
                     //TEST 模拟获取用户信息
                     certInfo = {
-                        cn: '小龙',
+                        name: '小龙',
                         sn: '10086',
-                        idCode: '110101199003073490',
+                        code: '110101199003073490',
                         notBefore: '2019年8月1日',
                         notAfter: '2020年8月1日',
                         status: 2000
