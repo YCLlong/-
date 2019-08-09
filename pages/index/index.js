@@ -1,47 +1,33 @@
 Page({
     data: {
         existCert: false,
-        certInfo: {}
+        certInfo: {},
+        existCode: false,
+        codeInfo: {}
     },
     /**
      * @param   query   通过类似url地址 get请求传递到页面的参数
      * 
      */
     onLoad(query) {
+        var app = getApp();
         var paramUtils = require("/utils/param.js");
-        var data = paramUtils.analyseQuery(query);
-        if (data == null) {
-            return;
-        }
-        if (data.existCert) {
-            this.setData({
-                existCert: true,
-                certInfo: data.certInfo
-            });
-        }
-        if (data.existCode) {
+        var codeInfo = paramUtils.analyseCode(query);
+        if (codeInfo != null) {
             this.setData({
                 existCode: true,
-                codeInfo: data.codeInfo
+                codeInfo: codeInfo
             });
         }
+        if(app.existCert){
+            this.setData({
+                existCert: true,
+                certInfo: app.certInfo
+            });
+        }
+        
         //页面路由
         this.route();
-    },
-    onReady() {
-        // 页面加载完成
-    },
-    onShow() {
-        // 页面显示
-    },
-    onHide() {
-        // 页面隐藏
-    },
-    onUnload() {
-        // 页面被关闭
-    },
-    onTitleClick() {
-        // 标题被点击
     },
     onPullDownRefresh() {
         // 下拉更新证书信息
@@ -51,16 +37,20 @@ Page({
         var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
         var pageObject = this;
         app.request(app.GATE_WAY, certInfoParam, function(certRes) {
-            dd.stopPullDownRefresh();
+            //dd.stopPullDownRefresh();
             var respData = paramUtils.resp(certRes);
             if (respData.success) {
                 var certInfo = respData.data.certData;
                 if (certInfo== undefined || certInfo == null || certInfo.status == null || certInfo.status == '') {
+                    app.existCert = false;
+                    app.certInfo = null;
                     pageObject.setData({
                         existCert: false,
                         certInfo: null,
                     });
                 } else {
+                    app.existCert = true;
+                    app.certInfo = certInfo;
                     pageObject.setData({
                         existCert: true,
                         certInfo: certInfo,
@@ -131,14 +121,16 @@ Page({
                 return;
             }
             var certUseToken = respData.data.token;
-            if (verifyUtils.isBlank(certUseToken)) {
+            var use = respData.data.use;
+            var appName = respData.data.appName;
+            if (verifyUtils.isBlank(certUseToken) || verifyUtils.isBlank(use) || verifyUtils.isBlank(appName)) {
                 msgUtils.errorMsg("服务器返回参数错误");
                 return;
             }
             
             //跳转pin码输入界面
             dd.navigateTo({
-                url: '/pages/pin/pin?token=' + certUseToken
+                url: '/pages/pin/pin?token=' + certUseToken + '&use=' + use + '&appName=' + appName
             });
         }, null);
     },
@@ -152,9 +144,8 @@ Page({
             this.certUseApply(this.data.codeInfo);
             return;
         }else if(this.data.existCert){
-            var paramUtils = require("/utils/param.js");
             dd.redirectTo({
-                url: '/pages/cert/cert' + paramUtils.certUrl(this.data.certInfo)
+                url: '/pages/cert/cert'
             });
         }
     }

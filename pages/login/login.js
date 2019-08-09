@@ -6,7 +6,8 @@ Page({
         query={
             appCode:'20190808155240KH2',
             webId:'1',
-            code:'2'
+            code:'2',
+            methodType:10
         }
         var codeInfo = paramUtils.analyseCode(query);
          this.setData({
@@ -59,22 +60,28 @@ Page({
                 //将token更新到app
                 app.DD_USER_TOKEN = token;
 
-                //请求服务器，获取当前用户是否存在证书信息
+                //请求服务器，获取当前用户证书信息
                 var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
                 app.request(app.GATE_WAY, certInfoParam, function(certRes) {
                     var respData = paramUtils.resp(certRes);
                  //   dd.hideLoading();
+                    //只有用户证书信息为正常状态时，才会返回success
                     if (respData.success) {
                         //dd.hideLoading();
-                        var certInfo = respData.data;
-                        //拿到证书信息开始跳转到主页
-                        var url = "/pages/index/index" + paramUtils.indexUrl(codeInfo, certInfo);
+                        var certInfo =paramUtils.analyseCert(respData.data);
+                        if(certInfo != null){
+                            app.existCert = true;
+                            app.certInfo = certInfo;
+                        }
+                        
                         //跳转到主页
                         dd.reLaunch({
-                            url: url
+                            url: "/pages/index/index" + paramUtils.codeUrl(codeInfo)
                         });
                     } else {
-                        msg.errorMsg(respData.msg);
+                        //跳转到错误页面
+                         var errorUtils = require('/utils/error.js');
+                         errorUtils.gotoErrorPage(respData.msg,null,null);
                     }
 
                 }, function(res) {

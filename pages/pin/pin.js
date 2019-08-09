@@ -2,7 +2,9 @@ Page({
     data: {},
     onLoad(query) {
         this.setData({
-            token:query.token
+            token:query.token,
+            use:query.use,
+            appName:query.appName
         });
      },
     

@@ -1,16 +1,14 @@
 Page({
-    data: {},
+    data: {
+        existCert: false,
+        certInfo: {}
+    },
     onLoad(query) {
-        var paramUtils = require('/utils/param.js');
-        var certInfo = paramUtils.analyseCert(query);
-        if (certInfo == null) {
-            this.setData({
-                existCert: false
-            });
-        } else {
+        var app = getApp();
+        if(app.existCert){
             this.setData({
                 existCert: true,
-                certInfo: certInfo
+                certInfo: app.certInfo
             });
         }
     },

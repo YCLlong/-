@@ -1,4 +1,5 @@
 <view>
-    pin码在这儿输入，贼拉好看
-   <input password="true" maxlength="6" name="code" onInput="pinInput" onConfirm="pinConfirm"/>
+   <view> 应用信息：{{appName}}</view>
+    <view> 用途：{{use}}</view>
+    输入pin码：<input password="true" maxlength="6" name="code" onInput="pinInput" onConfirm="pinConfirm"/>
 </view>
