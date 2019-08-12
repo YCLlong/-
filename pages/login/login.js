@@ -3,15 +3,15 @@ Page({
     onLoad(query) {
         var paramUtils = require('/utils/param.js');
         //第一次登录可能只有二维码信息
-        query={
-            appCode:'20190808155240KH2',
-            webId:'1',
-            code:'2',
-            methodType:10
+        query = {
+            appCode: '20190808155240KH2',
+            webId: '1',
+            code: '2',
+            methodType: 10
         }
         var codeInfo = paramUtils.analyseCode(query);
-         this.setData({
-            codeInfo:codeInfo
+        this.setData({
+            codeInfo: codeInfo
         });
         //页面加载
         var app = getApp();
@@ -25,9 +25,9 @@ Page({
         //     this.loginAuth(codeInfo, this);
         // }
     },
-     onPullDownRefresh() {
+    onPullDownRefresh() {
         dd.stopPullDownRefresh();
-     },
+    },
 
     //点击登录按钮进行授权登录
     login() {
@@ -64,31 +64,31 @@ Page({
                 var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
                 app.request(app.GATE_WAY, certInfoParam, function(certRes) {
                     var respData = paramUtils.resp(certRes);
-                 //   dd.hideLoading();
+                    dd.hideLoading();
                     //只有用户证书信息为正常状态时，才会返回success
                     if (respData.success) {
-                        //dd.hideLoading();
-                        var certInfo =paramUtils.analyseCert(respData.data);
-                        if(certInfo != null){
+                        dd.hideLoading();
+                        var certInfo = paramUtils.analyseCert(respData.data);
+                        if (certInfo != null) {
                             app.existCert = true;
                             app.certInfo = certInfo;
                         }
-                        
+
                         //跳转到主页
                         dd.reLaunch({
                             url: "/pages/index/index" + paramUtils.codeUrl(codeInfo)
                         });
                     } else {
                         //跳转到错误页面
-                         var errorUtils = require('/utils/error.js');
-                         errorUtils.gotoErrorPage(respData.msg,null,null);
+                        var errorUtils = require('/utils/error.js');
+                        errorUtils.gotoErrorPage(respData.msg, null, null);
                     }
 
                 }, function(res) {
-                   // dd.hideLoading();
+                    dd.hideLoading();
                 });
             } else {
-                //dd.hideLoading();
+                dd.hideLoading();
                 msg.errorMsg(resData.msg);
             }
         }, function(res) {

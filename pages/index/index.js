@@ -37,7 +37,7 @@ Page({
         var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
         var pageObject = this;
         app.request(app.GATE_WAY, certInfoParam, function(certRes) {
-            //dd.stopPullDownRefresh();
+            dd.stopPullDownRefresh();
             var respData = paramUtils.resp(certRes);
             if (respData.success) {
                 var certInfo = respData.data.certData;

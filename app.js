@@ -60,7 +60,7 @@ App({
                 dd.httpRequest({
                     url: url,
                     method: 'POST',
-                    //timeout: 6000,
+                    timeout: 6000,
                     data: param,
                     dataType: 'json',
                     success: function(res) {
