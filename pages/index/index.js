@@ -106,9 +106,9 @@ Page({
         var paramUtils = require("/utils/param.js");
         var verifyUtils = require("/utils/verify.js");
         var msgUtils = require("/utils/msg.js")
-        if (codeInfo == null || codeInfo == undefined || verifyUtils.isBlank(codeInfo.appCode) || verifyUtils.isBlank(codeInfo.webId) || verifyUtils.isBlank(codeInfo.code)) {
+        if (codeInfo == null || codeInfo == undefined || verifyUtils.isBlank(codeInfo.appCode) || verifyUtils.isBlank(codeInfo.webId)) {
             //TODO 这里要跳转到错误页面，错误页面需要指定跳转到证书界面的Url
-            msgUtils.errorMsg("我们无法处理这个二维码");
+            msgUtils.gotoErrorPage("我们无法处理这个二维码",null,null);
             return;
         }
 

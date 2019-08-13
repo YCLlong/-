@@ -62,10 +62,7 @@ Page({
             this.pin(v, function(successData, pageObject) {
                 //服务器返回pin码正确的回调
                 dd.hideLoading();   //关闭遮罩层
-            
-                //可以跳转到一个提示成功的界面
                 msgUtils.gotoSuccessPage('操作成功','/pages/cert/cert');
-                
             }, function(errorData, pageObject) {
                 //服务器返回pin码错误，或者别的问题的回调
                 dd.hideLoading();

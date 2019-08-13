@@ -1,4 +1,5 @@
 <view>
   <image style="width:128rpx;height:128rpx;margin: 0 auto" src="/images/error.png"/>
-  <view a:if = "{{errorMsg != null}}">错误详情：{{errorMsg}}</view>
+  <view a:if = "{{msg != null}}">错误详情：{{msg}}</view>
+  <view a:if = "{{tip != null}}">提示：{{tip}}</view>
 </view>

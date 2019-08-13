@@ -163,12 +163,6 @@ function cerateCodeInfoUrlParam(codeInfo) {
         url = url + codeInfo.appCode;
     }
 
-    //code,挑战码
-    url = url + "&code="
-    if (codeInfo.code != null && codeInfo.code != undefined) {
-        url = url + codeInfo.code;
-    }
-
     //webId,web标识
     url = url + "&webId="
     if (codeInfo.webId != null && codeInfo.webId != undefined) {
@@ -346,7 +340,6 @@ function certApplyRequestParam(applyInfo, token) {
 function certUseRequestParam(codeInfo, token) {
     var param = createRequestParam('1005');
     param.msgData.appCode = codeInfo.appCode;
-    param.msgData.code = codeInfo.code;
     param.msgData.webId = codeInfo.webId;
     param.msgData.methodType = codeInfo.methodType;
     param.msgData.token = token;
