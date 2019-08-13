@@ -47,6 +47,7 @@ App({
         dd.getNetworkType({
             success: (res) => {
                 if (!res.networkAvailable) {
+                    dd.hideLoading();
                     dd.showToast({
                         type: 'exception',
                         content: '当前网络不可用，请您检查网络状态',
@@ -67,13 +68,13 @@ App({
                         successFun(res);
                     },
                     fail: function(res) {
-                        dd.hideLoading();
                         if (errorFun != null) {
                             errorFun(res);
                         } else {
+                            dd.hideLoading();
                             dd.showToast({
                                 type: 'exception',
-                                content: res.errorMessage,
+                                content: '服务端无响应，请稍后再试',
                                 duration: 3000,
                             });
                         }

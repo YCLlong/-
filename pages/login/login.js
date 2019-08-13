@@ -2,13 +2,15 @@ Page({
     data: {},
     onLoad(query) {
         var paramUtils = require('/utils/param.js');
-        //第一次登录可能只有二维码信息
-        query = {
-            appCode: '20190808155240KH2',
-            webId: '1',
-            code: '2',
-            methodType: 10
-        }
+        //TEST 模拟扫码信息
+        // query = {
+        //     appCode: '20190808155240KH2',
+        //     webId: '1',
+        //     code: '2',
+        //     methodType: 10
+        // }
+
+        //第一次登录可能有二维码信息
         var codeInfo = paramUtils.analyseCode(query);
         this.setData({
             codeInfo: codeInfo
@@ -57,7 +59,7 @@ Page({
                     msg.errorMsg('服务器返回参数错误');
                     return;
                 }
-                //将token更新到app
+                //将token更新到app全局对象
                 app.DD_USER_TOKEN = token;
 
                 //请求服务器，获取当前用户证书信息
@@ -67,21 +69,18 @@ Page({
                     dd.hideLoading();
                     //只有用户证书信息为正常状态时，才会返回success
                     if (respData.success) {
-                        dd.hideLoading();
                         var certInfo = paramUtils.analyseCert(respData.data);
                         if (certInfo != null) {
                             app.existCert = true;
                             app.certInfo = certInfo;
                         }
-
                         //跳转到主页
                         dd.reLaunch({
                             url: "/pages/index/index" + paramUtils.codeUrl(codeInfo)
                         });
                     } else {
                         //跳转到错误页面
-                        var errorUtils = require('/utils/error.js');
-                        errorUtils.gotoErrorPage(respData.msg, null, null);
+                        msg.gotoErrorPage(respData.msg, null, null);
                     }
 
                 }, function(res) {
@@ -89,12 +88,13 @@ Page({
                 });
             } else {
                 dd.hideLoading();
-                msg.errorMsg(resData.msg);
+                //4020表示用户不存在，不提示
+                if(resData.code != '4020'){
+                    msg.errorMsg(resData.msg);
+                }
+               
             }
-        }, function(res) {
-            dd.hideLoading();
-            msg.errorMsg(res.errorMessage);
-        });
+        }, null);
     },
 
     /**
@@ -103,6 +103,9 @@ Page({
      * 
      */
     loginAuth(codeInfo, pageObject) {
+         dd.showLoading({
+            content: '登录中...'
+        });
         var app = getApp();
         var msg = require('/utils/msg.js');
         var paramUtils = require('/utils/param.js');
@@ -113,6 +116,7 @@ Page({
                 app.request(app.GATE_WAY, param, function(res) {
                     var resData = paramUtils.resp(res);
                     if (resData.success) {
+                        dd.hideLoading();
                         //获取用户免密标识
                         var userCode = resData.data.dtid;
 
@@ -135,6 +139,7 @@ Page({
                         //登录系统
                         pageObject.loginNoPwd(userCode, codeInfo);
                     } else {
+                        dd.hideLoading();
                         msg.errorMsg(resData.msg);
                     }
                 }, null);

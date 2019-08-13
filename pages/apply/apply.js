@@ -68,6 +68,7 @@ Page({
         app.request(app.GATE_WAY, param, function(res) {
             var respData = paramUtils.resp(res);
             if (!respData.success) {
+                dd.hideLoading();
                 msg.errorMsg(respData.msg);
                 return;
             }
@@ -79,14 +80,14 @@ Page({
                 if (respData.success) {
                     var certInfo = respData.data.certData;
                     //TEST 模拟获取用户信息
-                    certInfo = {
-                        name: '小龙',
-                        sn: '10086',
-                        code: '110101199003073490',
-                        notBefore: '2019年8月1日',
-                        notAfter: '2020年8月1日',
-                        status: 2000
-                    };
+                    // certInfo = {
+                    //     name: '小龙',
+                    //     sn: '10086',
+                    //     code: '110101199003073490',
+                    //     notBefore: '2019年8月1日',
+                    //     notAfter: '2020年8月1日',
+                    //     status: 2000
+                    // };
 
                     var url = "/pages/index/index" + paramUtils.certUrl(certInfo);
                     //跳转到主页
@@ -94,10 +95,9 @@ Page({
                         url: url
                     });
                 } else {
-                    dd.hideLoading();
                     msg.errorMsg(respData.msg);
                 }
             }, null);
-        }, null);
+        },null);
     }
 });

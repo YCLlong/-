@@ -5,10 +5,10 @@
     "pages/apply/apply",
     "pages/error/error",
     "pages/pin/pin",
-    "pages/cert/cert"
+    "pages/cert/cert",
+    "pages/success/success"
   ],
   "window": {
-    "defaultTitle": "云证书",
-    "pullRefresh": true
+    "defaultTitle": "云证书"
   }
 }

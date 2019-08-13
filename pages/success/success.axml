@@ -1,0 +1,4 @@
+<view>
+  <image style="width:128rpx;height:128rpx;margin: 0 auto" src="/images/success.png"/>
+  <view a:if = "{{msg != null}}">{{msg}}</view>
+</view>

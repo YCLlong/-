@@ -31,40 +31,40 @@ Page({
     },
     onPullDownRefresh() {
         // 下拉更新证书信息
-        var app = getApp();
-        var msg = require('/utils/msg.js');
-        var paramUtils = require('/utils/param.js');
-        var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
-        var pageObject = this;
-        app.request(app.GATE_WAY, certInfoParam, function(certRes) {
-            dd.stopPullDownRefresh();
-            var respData = paramUtils.resp(certRes);
-            if (respData.success) {
-                var certInfo = respData.data.certData;
-                if (certInfo== undefined || certInfo == null || certInfo.status == null || certInfo.status == '') {
-                    app.existCert = false;
-                    app.certInfo = null;
-                    pageObject.setData({
-                        existCert: false,
-                        certInfo: null,
-                    });
-                } else {
-                    app.existCert = true;
-                    app.certInfo = certInfo;
-                    pageObject.setData({
-                        existCert: true,
-                        certInfo: certInfo,
-                    });
-                }
+        // var app = getApp();
+        // var msg = require('/utils/msg.js');
+        // var paramUtils = require('/utils/param.js');
+        // var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
+        // var pageObject = this;
+        // app.request(app.GATE_WAY, certInfoParam, function(certRes) {
+        //     dd.stopPullDownRefresh();
+        //     var respData = paramUtils.resp(certRes);
+        //     if (respData.success) {
+        //         var certInfo = respData.data.certData;
+        //         if (certInfo== undefined || certInfo == null || certInfo.status == null || certInfo.status == '') {
+        //             app.existCert = false;
+        //             app.certInfo = null;
+        //             pageObject.setData({
+        //                 existCert: false,
+        //                 certInfo: null,
+        //             });
+        //         } else {
+        //             app.existCert = true;
+        //             app.certInfo = certInfo;
+        //             pageObject.setData({
+        //                 existCert: true,
+        //                 certInfo: certInfo,
+        //             });
+        //         }
                
-                pageObject.route();
-            } else {
-                msg.errorMsg(respData.msg);
-            }
-        }, function(res){
-            dd.stopPullDownRefresh();
-            msg.errorMsg(res.errorMessage);
-        },pageObject);
+        //         pageObject.route();
+        //     } else {
+        //         msg.errorMsg(respData.msg);
+        //     }
+        // }, function(res){
+        //     dd.stopPullDownRefresh();
+        //     msg.errorMsg(res.errorMessage);
+        // },pageObject);
     },
     onReachBottom() {
         // 页面被拉到底部
