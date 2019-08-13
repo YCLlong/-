@@ -1,7 +1,7 @@
 App({
     //小程序后台接口网关
-    GATE_WAY:'http://192.168.0.231:8080/spInterface/message/msg/GateWay.htm',
-
+    //GATE_WAY:'http://192.168.0.231:8080/spInterface/message/msg/GateWay.htm',
+    GATE_WAY:'http://192.168.110.150:8080/spInterface/message/msg/GateWay.htm',
     //缓存中用户钉钉号标识
     DD_USER_CODE: 'ddUserCode',
 
@@ -116,9 +116,9 @@ App({
         var paramUtils = require("/utils/param.js");
         var verifyUtils = require("/utils/verify.js");
         var msgUtils = require("/utils/msg.js")
-        if (codeInfo == null || codeInfo == undefined || verifyUtils.isBlank(codeInfo.appCode) || verifyUtils.isBlank(codeInfo.webId)) {
+        if (codeInfo == null || codeInfo == undefined || verifyUtils.isBlank(codeInfo.appCode) || verifyUtils.isBlank(codeInfo.webId) || verifyUtils.isBlank(codeInfo.methodType)) {
             //TODO 这里要跳转到错误页面，错误页面需要指定跳转到证书界面的Url
-            msgUtils.gotoErrorPage("我们无法处理这个二维码",null,null);
+            msgUtils.gotoErrorPage("我们无法处理这个二维码",null,'/pages/cert/cert');
             return;
         }
 
@@ -127,14 +127,14 @@ App({
         this.request(this.GATE_WAY, param, function(res) {
             var respData = paramUtils.resp(res);
             if (!respData.success) {
-                msg.errorMsg(respData.msg);
+                msgUtils.gotoErrorPage(respData.msg,null,'/pages/cert/cert');
                 return;
             }
             var certUseToken = respData.data.token;
             var use = respData.data.use;
             var appName = respData.data.appName;
             if (verifyUtils.isBlank(certUseToken) || verifyUtils.isBlank(use) || verifyUtils.isBlank(appName)) {
-                msgUtils.errorMsg("服务器返回参数错误");
+                msgUtils.gotoErrorPage("服务器返回参数错误",null,'/pages/cert/cert');
                 return;
             }
             

@@ -23,7 +23,8 @@ Page({
             success: (res) => {
                 var query = paramUtils.getParameter('query', res.code);
                 if(query == null){
-                    dd.alert({ title: '二维码内容', content: res.code });
+                    msgUtils.gotoErrorPage('我们不能处理这个二维码',null,'/pages/cert/cert');
+                    //dd.alert({ title: '二维码内容', content: res.code });
                     return;
                 }
                 var paramContent = '?' + query;//decodeURIComponent();
@@ -32,7 +33,8 @@ Page({
                 codeInfo.appCode = paramUtils.getParameter('appCode',paramContent);
                 codeInfo.methodType = paramUtils.getParameter('methodType',paramContent);
                 if( codeInfo.webId == null ||   codeInfo.appCode == null || codeInfo.methodType == null){
-                    dd.alert({ title: '二维码内容', content: res.code });
+                    msgUtils.gotoErrorPage('我们不能处理这个二维码',null,'/pages/cert/cert');
+                    //dd.alert({ title: '二维码内容', content: res.code });
                 }else{
                     getApp().certUseApply(codeInfo);
                 }
