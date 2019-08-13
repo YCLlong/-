@@ -6,9 +6,15 @@ Page({
     onLoad(query) {
         var app = getApp();
         if(app.existCert){
+            var certInfo = app.certInfo;
+            if(app.certInfo.status == 2000){
+                certInfo.statusName = '正常';
+            }else if(app.certInfo.status == 3000){
+                certInfo.statusName = '锁定';
+            }
             this.setData({
                 existCert: true,
-                certInfo: app.certInfo
+                certInfo:certInfo
             });
         }
     },

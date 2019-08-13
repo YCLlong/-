@@ -121,6 +121,16 @@ App({
             msgUtils.gotoErrorPage("我们无法处理这个二维码",null,'/pages/cert/cert');
             return;
         }
+        //检查证书状态
+        if(!this.existCert || this.certInfo == undefined || this.certInfo == null){
+             msgUtils.gotoErrorPage("不存在证书信息",'若您已经申请过证书，请重新登录后重试',null);
+             return;
+        }
+
+        if(this.certInfo.status == 3000){
+            msgUtils.gotoErrorPage("您的证书已被锁定，无法进行扫码操作",'请联系客服解锁，客服电话：0571-85800758','/pages/cert/cert');
+            return;
+        }
 
         //封装使用证书请求参数
         let param = paramUtils.certUseParam(codeInfo, this.DD_USER_TOKEN);

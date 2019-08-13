@@ -6,6 +6,7 @@ Page({
         // query = {
         //     appCode: '20190808155240KH2',
         //     webId: '1',
+        //     methodType:'10'
         // }
 
         //第一次登录可能有二维码信息
