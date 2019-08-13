@@ -12,21 +12,33 @@ Page({
             });
         }
     },
-     onPullDownRefresh() {
-        dd.stopPullDownRefresh();
-     },
     /**
      * 扫二维码
      */
     scan() {
-        var msgUtils = require("/utils/msg.js")
+        var msgUtils = require("/utils/msg.js");
+        var paramUtils = require("/utils/param.js");
         dd.scan({
             type: 'qr',
             success: (res) => {
-                dd.alert({ title: '二维码内容', content: res.code });
+                var query = paramUtils.getParameter('query', res.code);
+                if(query == null){
+                    dd.alert({ title: '二维码内容', content: res.code });
+                    return;
+                }
+                var paramContent = '?' + query;//decodeURIComponent();
+                var codeInfo = {};
+                codeInfo.webId = paramUtils.getParameter('webId',paramContent);
+                codeInfo.appCode = paramUtils.getParameter('appCode',paramContent);
+                codeInfo.methodType = paramUtils.getParameter('methodType',paramContent);
+                if( codeInfo.webId == null ||   codeInfo.appCode == null || codeInfo.methodType == null){
+                    dd.alert({ title: '二维码内容', content: res.code });
+                }else{
+                    getApp().certUseApply(codeInfo);
+                }
             },
             fail: (res) => {
-                msgUtils.errorMsg("扫码失败！错误代码：" + res.code);
+                msgUtils.errorMsg("扫码失败");
             }
         });
     }

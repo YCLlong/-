@@ -103,5 +103,45 @@ App({
             showError("无法读取缓存信息，详情：" + e.errorMessage);
             return null;
         }
+    },
+
+     /**
+     * 申请使用证书
+     * 三个必须参数
+     * appCode  应用code
+     * webId    调用方某个标识，给调用方的扩展字段
+     * code     挑战码
+     */
+    certUseApply(codeInfo) {
+        var paramUtils = require("/utils/param.js");
+        var verifyUtils = require("/utils/verify.js");
+        var msgUtils = require("/utils/msg.js")
+        if (codeInfo == null || codeInfo == undefined || verifyUtils.isBlank(codeInfo.appCode) || verifyUtils.isBlank(codeInfo.webId)) {
+            //TODO 这里要跳转到错误页面，错误页面需要指定跳转到证书界面的Url
+            msgUtils.gotoErrorPage("我们无法处理这个二维码",null,null);
+            return;
+        }
+
+        //封装使用证书请求参数
+        let param = paramUtils.certUseParam(codeInfo, this.DD_USER_TOKEN);
+        this.request(this.GATE_WAY, param, function(res) {
+            var respData = paramUtils.resp(res);
+            if (!respData.success) {
+                msg.errorMsg(respData.msg);
+                return;
+            }
+            var certUseToken = respData.data.token;
+            var use = respData.data.use;
+            var appName = respData.data.appName;
+            if (verifyUtils.isBlank(certUseToken) || verifyUtils.isBlank(use) || verifyUtils.isBlank(appName)) {
+                msgUtils.errorMsg("服务器返回参数错误");
+                return;
+            }
+            
+            //跳转pin码输入界面
+            dd.navigateTo({
+                url: '/pages/pin/pin?token=' + certUseToken + '&use=' + use + '&appName=' + appName
+            });
+        }, null);
     }
 });

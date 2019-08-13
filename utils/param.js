@@ -360,6 +360,23 @@ function verifyPinRequestParam(token, pinHash) {
     return param;
 }
 
+/**
+ * 提取url中的参数
+ * @param name  参数名称
+ * @param url   链接地址
+ */
+function getParameter(name,url) {  
+    if(url == null || url == undefined || url == '' || name == null || name == undefined || name == ''){
+        return null;
+    }
+	var reg = new RegExp('(/?|^|&)' + name + '=([^&]*)(&|$)', 'i');  
+	var r = url.match(reg);  
+	if(r != null) {    
+		return unescape(r[2]);  
+	}  
+	return null;
+}
+
 
 /**
  * 暴露方法1，不然钉钉小程序外部无法访问到
@@ -377,5 +394,6 @@ module.exports = {
     certInfoParam: certInfoRequestParam,
     certApplyParam: certApplyRequestParam,
     certUseParam: certUseRequestParam,
-    verifyPinParam: verifyPinRequestParam
+    verifyPinParam: verifyPinRequestParam,
+    getParameter:getParameter
 }
