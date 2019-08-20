@@ -1,7 +1,7 @@
 
 <view class="loginBg">
   <view class="loginTitleBg"></view>
-  <image class="logo" src="../../../images/logo.png" />
+  <image class="logo" src="/images/logo.png" />
   <view class="title">
     <text>云证书</text>
   </view>

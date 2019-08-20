@@ -120,7 +120,7 @@ App({
         var paramUtils = require("/utils/param.js");
         var verifyUtils = require("/utils/verify.js");
         var msgUtils = require("/utils/msg.js")
-        if (codeInfo == null || codeInfo == undefined || verifyUtils.isBlank(codeInfo.appCode) || verifyUtils.isBlank(codeInfo.webId) || verifyUtils.isBlank(codeInfo.methodType)) {
+        if (codeInfo == undefined || codeInfo == null || verifyUtils.isBlank(codeInfo.bizToken)) {
             //TODO 这里要跳转到错误页面，错误页面需要指定跳转到证书界面的Url
             msgUtils.gotoErrorPage("我们无法处理这个二维码",null,'/pages/cert/cert');
             return;

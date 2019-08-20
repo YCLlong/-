@@ -7,7 +7,7 @@
  * 将参数解析成证书信息对象
  */
 function analyseCert(query) {
-    if (query != null && query != undefined && query.status != null && query.status != undefined && query.status != '' &&  query.code != null &&  query.code != undefined &&  query.code != '') {
+    if (query != null && query != undefined && query.status != null && query.status != undefined && query.status != '' && query.code != null && query.code != undefined && query.code != '') {
         var certInfo = {};
         //封装证书信息
         certInfo.name = query.name;
@@ -22,6 +22,18 @@ function analyseCert(query) {
             certInfo.code = '';
         } else {
             certInfo.code = query.code;
+        }
+
+        if (query.phone == undefined) {
+            certInfo.phone = '';
+        } else {
+            certInfo.phone = query.phone;
+        }
+
+        if (query.csn == undefined) {
+            certInfo.csn = '';
+        } else {
+            certInfo.csn = query.csn;
         }
 
         if (query.notBefore == undefined) {
@@ -45,30 +57,10 @@ function analyseCert(query) {
  */
 function analyseCode(query) {
     //解析二维码信息
-    if (query != null && query != undefined && query.appCode != null && query.appCode != '') {
-         var codeInfo = {};
-        //应用方编码
-        codeInfo.appCode = query.appCode
-        //挑战码
-        if (query.code == undefined) {
-            codeInfo.code = '';
-        } else {
-            codeInfo.code = query.code;
-        }
-
-        //页面标识
-        if (query.webId == undefined) {
-            codeInfo.webId = '';
-        } else {
-            codeInfo.webId = query.webId;
-        }
-
-        //扫码用途
-         if (query. methodType == undefined) {
-            codeInfo. methodType = '';
-        } else {
-            codeInfo. methodType = query.methodType;
-        }
+    if ( query != undefined && query != null &&  query.bizToken != undefined && query.bizToken != null && query.bizToken != '') {
+        var codeInfo = {
+            bizToken : query.bizToken//业务token
+        };
         return codeInfo;
     }
     return null;
@@ -76,7 +68,7 @@ function analyseCode(query) {
 /**
  * 封装地址参数
  */
-function analyseQuery(query) {   
+function analyseQuery(query) {
     var data = {
         existCert: false,    //是否存在证书信息
         existCode: false,    //是否存在二维码信息
@@ -106,43 +98,49 @@ function analyseQuery(query) {
  * 将证书对象转化成url的参数形式
  */
 function createCertInfoUrlParam(certInfo) {
-    if (certInfo == null || certInfo == undefined || !certInfo instanceof Object) {
-        return "?name=&sn=&code=&notBefore=&notAfter=&status=";
+    if (certInfo == undefined || certInfo == null || !certInfo instanceof Object) {
+        return "?name=&sn=&csn=&code=&notBefore=&notAfter=&status=";
     }
     var url = '?';
     //cn,证书名字
     url = url + "name="
-    if (certInfo.name != null && certInfo.name != undefined) {
+    if (certInfo.name != undefined && certInfo.name != null) {
         url = url + certInfo.name;
     }
 
     //sn,证书序列号
     url = url + "&sn="
-    if (certInfo.sn != null && certInfo.sn != undefined) {
+    if (certInfo.sn != undefined && certInfo.sn != null) {
         url = url + certInfo.sn;
+    }
+
+     //csn,证书不变序列号
+    url = url + "&csn="
+    if (certInfo.csn != undefined && certInfo.csn != null) {
+        url = url + certInfo.csn;
     }
 
     //身份证号
     url = url + "&code="
-    if (certInfo.code != null && certInfo.code != undefined) {
+    if (certInfo.code != undefined && certInfo.code != null) {
         url = url + certInfo.code;
     }
 
     //notBefore,证书有效起始时间
     url = url + "&notBefore="
-    if (certInfo.notBefore != null && certInfo.notBefore != undefined) {
+    if (certInfo.notBefore != undefined && certInfo.notBefore != null) {
         url = url + certInfo.notBefore;
     }
 
     //notAfter,证书有效截止时间
     url = url + "&notAfter="
-    if (certInfo.notAfter != null && certInfo.notAfter != undefined) {
+    if (certInfo.notAfter != undefined && certInfo.notAfter != null) {
         url = url + certInfo.notAfter;
     }
 
     //证书状态
     url = url + "&status="
-    if (certInfo.status != null && certInfo.status != undefined) {
+    if (certInfo.status != undefined && certInfo.status != null) {
         url = url + certInfo.status;
     }
 
@@ -153,26 +151,13 @@ function createCertInfoUrlParam(certInfo) {
  * 将二维码对象封装成url形式
  */
 function cerateCodeInfoUrlParam(codeInfo) {
-    if (codeInfo == null || codeInfo == undefined || !codeInfo instanceof Object) {
-        return "?appCode=&code=&webId=&methodType=";
+    if (codeInfo == undefined || codeInfo == null ||  !codeInfo instanceof Object) {
+        return "?bizToken=";
     }
-    var url = '?';
-    //appCode,应用code
-    url = url + "appCode="
-    if (codeInfo.appCode != null && codeInfo.appCode != undefined) {
-        url = url + codeInfo.appCode;
-    }
-
-    //webId,web标识
-    url = url + "&webId="
-    if (codeInfo.webId != null && codeInfo.webId != undefined) {
-        url = url + codeInfo.webId;
-    }
-
-    //扫码用途
-    url = url + "&methodType="
-    if (codeInfo.methodType != null && codeInfo.methodType != undefined) {
-        url = url + codeInfo.methodType;
+    //bizToken,业务token
+    url = "?bizToken="
+    if (codeInfo.bizToken != undefined && codeInfo.bizToken != null) {
+        url = url + codeInfo.bizToken;
     }
     return url;
 }
@@ -209,7 +194,7 @@ function dealServerResponse(res) {
     //TEST 模拟服务响应正确
     //res.success = 'true';
 
-    if (!res instanceof Object || res.data == undefined || res.data == null ||  res.data.success == undefined || res.data.success == null || res.data.success == '' || !(res.data.success == 'true' || res.data.success == 'false')) {
+    if (!res instanceof Object || res.data == undefined || res.data == null || res.data.success == undefined || res.data.success == null || res.data.success == '' || !(res.data.success == 'true' || res.data.success == 'false')) {
         resp.success = false;
         resp.msg = '服务端返回参数不正确';
         resp.code = 5001;
@@ -249,19 +234,8 @@ function dealServerResponse(res) {
         resp.msg = data.msg;
     }
 
-    if (data.data == undefined || data.data == null || data.data =='') {
+    if (data.data == undefined || data.data == null || data.data == '') {
         resp.data == {};
-    } else {
-        //转化成json对象
-        try{
-            resp.data =  JSON.parse(data.data);
-        }catch(e){
-            resp.success = false;
-            resp.msg = '服务端返回参数不正确';
-            resp.code = 5001;
-            return resp;
-        }
-        
     }
     return resp;
 }
@@ -280,60 +254,58 @@ function createRequestParam(methodCode) {
 }
 
 /**
- * API1请求参数封装
+ * 通过用户授权后登录
  * @param authCode 用户授权小程序后的授权码
  */
 function logInFirstRequestParam(authCode) {
-    var param = createRequestParam('1001');
-    param.msgData.code = authCode;
+    var param = createRequestParam('ddLogin');
+    param.msgData.dingTalkCode = authCode;
     param.msgData = JSON.stringify(param.msgData);
     return param;
 }
 
 /**
- * API2请求参数封装
- * @param dtid  钉钉用户ID在本系统内唯一标识
+ * 通过免登标识登录
+ * @param freeId  用户的免登标识
  */
-function loginNoPwdRequestParam(dtid) {
-    var param = createRequestParam('1002');
-    param.msgData.dtid = dtid;
+function loginNoPwdRequestParam(freeId) {
+    var param = createRequestParam('freeLogin');
+    param.msgData.freeId = freeId;
     param.msgData = JSON.stringify(param.msgData);
     return param;
 }
 
 /**
- * API3获取证书信息接口请求参数
+ * 查询证书信息接口请求参数
  * @param isForce   是否强制更新标识（1是0否）
- * @param token     登录后获得的token,时效30分钟的后续调用凭证
+ * @param userToken     登录后获得的token,时效30分钟的后续调用凭证
  */
-function certInfoRequestParam(isForce, token) {
-    var param = createRequestParam('1003');
+function certInfoRequestParam(isForce, userToken) {
+    var param = createRequestParam('certView');
     param.msgData.isForce = isForce;
-    param.msgData.token = token;
+    param.msgData.userToken = userToken;
     param.msgData = JSON.stringify(param.msgData);
     return param;
 }
 
 /**
- * API4证书申请接口参数请求参数
+ * 证书申请接口参数请求参数
  * @param applyInfo 申请信息
- * @param token     登录后获得的token,时效30分钟的后续调用凭证
+ * @param userToken     登录后获得的token,时效30分钟的后续调用凭证
  */
-function certApplyRequestParam(applyInfo, token) {
-    var param = createRequestParam('1004');
-    param.msgData.regData = {};
-    param.msgData.regData.name = applyInfo.name;
-    param.msgData.regData.idcode = applyInfo.idCode;
-    param.msgData.regData.mobile = applyInfo.mobile;
-    param.msgData.regData = JSON.stringify(param.msgData.regData);
-    param.msgData.pHash = applyInfo.pHash;
-    param.msgData.token = token;
+function certApplyRequestParam(applyInfo, userToken) {
+    var param = createRequestParam('createCert');
+    param.msgData.name = applyInfo.name;
+    param.msgData.code = applyInfo.code;
+    param.msgData.phone = applyInfo.phone;
+    param.msgData.pin = applyInfo.pin;
+    param.msgData.userToken = userToken;
     param.msgData = JSON.stringify(param.msgData);
     return param;
 }
 
 /**
- * API5申请使用证书请求参数
+ * 申请使用证书请求参数
  * @param codeInfo 二维码信息封装
  * @param token   登录后获得的token,时效30分钟的后续调用凭证
  */
@@ -365,16 +337,16 @@ function verifyPinRequestParam(token, pinHash) {
  * @param name  参数名称
  * @param url   链接地址
  */
-function getParameter(name,url) {  
-    if(url == null || url == undefined || url == '' || name == null || name == undefined || name == ''){
+function getParameter(name, url) {
+    if (url == null || url == undefined || url == '' || name == null || name == undefined || name == '') {
         return null;
     }
-	var reg = new RegExp('(/?|^|&)' + name + '=([^&]*)(&|$)', 'i');  
-	var r = url.match(reg);  
-	if(r != null) {    
-		return unescape(r[2]);  
-	}  
-	return null;
+    var reg = new RegExp('(/?|^|&)' + name + '=([^&]*)(&|$)', 'i');
+    var r = url.match(reg);
+    if (r != null) {
+        return unescape(r[2]);
+    }
+    return null;
 }
 
 
@@ -395,5 +367,5 @@ module.exports = {
     certApplyParam: certApplyRequestParam,
     certUseParam: certUseRequestParam,
     verifyPinParam: verifyPinRequestParam,
-    getParameter:getParameter
+    getParameter: getParameter
 }

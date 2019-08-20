@@ -1,8 +1,5 @@
-
-
-
 <view class="indexBg">
-  <image mode="widthFix" src="../../../images/index.jpg" style="width:100%;"/>
+  <image mode="widthFix" src="/images/index.jpg" style="width:100%;"/>
 </view>
 <view class="plr40">
     <!-- 用户已有证书 -->

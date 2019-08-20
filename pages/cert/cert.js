@@ -35,10 +35,8 @@ Page({
                 }
                 var paramContent = '?' + query;//decodeURIComponent();
                 var codeInfo = {};
-                codeInfo.webId = paramUtils.getParameter('webId',paramContent);
-                codeInfo.appCode = paramUtils.getParameter('appCode',paramContent);
-                codeInfo.methodType = paramUtils.getParameter('methodType',paramContent);
-                if( codeInfo.webId == null ||   codeInfo.appCode == null || codeInfo.methodType == null){
+                codeInfo.bizToken = paramUtils.getParameter('bizToken',paramContent);
+                if( codeInfo.bizToken == null){
                     msgUtils.gotoErrorPage('我们不能处理这个二维码',null,'/pages/cert/cert');
                     //dd.alert({ title: '二维码内容', content: res.code });
                 }else{

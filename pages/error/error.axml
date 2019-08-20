@@ -7,8 +7,6 @@
 </view>
 <view a:if="{{backUrl != null}}">
     <view class="plr40">
-        <navigator url="../index/index">
-            <button class="mt50" size="default" type="primary">返回</button>
-        </navigator>
+        <button class="mt50" size="default" type="primary" onTap="goBack">返回</button>
     </view>
 </view>

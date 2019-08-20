@@ -14,12 +14,12 @@ Page({
             msg.errorMsg("请您输入姓名");
             return false;
         }
-        if (!verify.isCardNo(data.idCode)) {
+        if (!verify.isCardNo(data.code)) {
             msg.errorMsg("请输入正确的身份证号码");
             return false;
         }
 
-        if (!verify.isMobileNo(data.mobile)) {
+        if (!verify.isMobileNo(data.phone)) {
             msg.errorMsg("请输入正确的手机号");
             return false;
         }
@@ -55,9 +55,9 @@ Page({
         var pinHash = sha.sha256(data.pin);
         var applyInfo = {
             name: data.name,
-            idCode: data.idCode,
-            mobile: data.mobile,
-            pHash: pinHash
+            code: data.code,
+            phone: data.phone,
+            pin: pinHash
         };
         
         //封装申请证书的参数
@@ -95,7 +95,8 @@ Page({
                         url: url
                     });
                 } else {
-                    msg.errorMsg(respData.msg);
+                     //跳转到错误页面
+                    msg.gotoErrorPage(respData.msg, null, null);
                 }
             }, null);
         },null);

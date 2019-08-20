@@ -51,7 +51,7 @@ Page({
         app.request(app.GATE_WAY, loginParam, function(res) {
             var resData = paramUtils.resp(res);
             if (resData.success) {
-                var token = resData.data.token;
+                var token = resData.data.userToken;
 
                 //TEST  模拟token
                 //token = '123456789';
@@ -83,16 +83,13 @@ Page({
                         msg.gotoErrorPage(respData.msg, null, null);
                     }
 
-                }, function(res) {
-                    dd.hideLoading();
-                });
+                },null);
             } else {
                 dd.hideLoading();
                 //4020表示用户不存在，不提示
                 if(resData.code != '4020'){
                     msg.errorMsg(resData.msg);
                 }
-               
             }
         }, null);
     },
@@ -118,7 +115,7 @@ Page({
                     if (resData.success) {
                         dd.hideLoading();
                         //获取用户免密标识
-                        var userCode = resData.data.dtid;
+                        var userCode = resData.data.freeId;
 
                         //TEST 模拟用户免登标识
                         //userCode = 'DD_YCL';
