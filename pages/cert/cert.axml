@@ -21,6 +21,6 @@
   </view>
   <view a:if = "{{certInfo.status == 2000}}">
       <!-- 正常状态的证书才能扫码 -->
-      <button size="default" type="primary" onTap="scan"><icon type="search"></icon>我是扫码图标</button>
+      <button size="default" type="primary" onTap="scan">扫一扫</button>
   </view>
 </view>

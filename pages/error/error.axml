@@ -1,13 +1,14 @@
 <view class="sysInfoBg">
-  <view style="background:#fff;padding:50rpx 0rpx;">
-    <image mode="widthFix" style="width:325rpx;" src="/images/5-1.png"/>
-    <view class="mt30" a:if = "{{msg != null}}">错误详情：{{msg}}</view>
-    <view a:if = "{{tip != null}}">提示：{{tip}}</view>
-  </view>
+    <view style="background:#fff;padding:50rpx 0rpx;">
+        <image mode="widthFix" style="width:325rpx;" src="/images/5-1.png"/>
+        <view class="mt30" a:if = "{{msg != null && msg != ''}}">错误详情：{{msg}}</view>
+        <view a:if = "{{tip != null && tip != ''}}">提示：{{tip}}</view>
+    </view>
 </view>
-
-<view class="plr40">
-  <navigator url="../index/index">
-    <button class="mt50" size="default" type="primary" >返回</button>
-  </navigator>
+<view a:if="{{backUrl != null}}">
+    <view class="plr40">
+        <navigator url="../index/index">
+            <button class="mt50" size="default" type="primary">返回</button>
+        </navigator>
+    </view>
 </view>

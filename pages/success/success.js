@@ -14,9 +14,15 @@ Page({
     onUnload() {
         let backUrl = this.data.backUrl;
         if(backUrl == null || backUrl == undefined){
+             this.setData({
+                backUrl:null
+            });
             return;
         }
         //如果设置了回跳地址就跳转到指定地址
+         this.setData({
+                backUrl:backUrl
+            });
         dd.redirectTo({
             url: backUrl,
         });
