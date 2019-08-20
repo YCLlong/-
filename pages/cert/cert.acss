@@ -1,0 +1,29 @@
+@import "../../css/globe.acss";
+@import "../../css/base.acss";
+
+
+.label{
+  width:180rpx;
+  display: inline-block;
+  font-size: 30rpx;
+  height: 100rpx;
+  line-height:100rpx;
+  vertical-align: middle;
+  text-indent: 5rpx;
+}
+
+.sgin text{
+  font-size: 30rpx;
+  height: 100rpx;
+  line-height:100rpx;
+  display: inline-block;
+  vertical-align: middle;
+  background: none;
+  width:400rpx;
+}
+
+
+.userInfo{
+  height:100rpx;
+  border-bottom:1rpx solid #ccc;
+}

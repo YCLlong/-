@@ -1,11 +1,26 @@
-<view>
-    <text>证书序列号: {{certInfo.sn}}\n\n</text>
-    <text>证书名称: {{certInfo.name}}\n\n</text>
-    <text>证件号码: {{certInfo.code}} \n\n</text>
-    <text>有效期: {{certInfo.notBefore}} - {{certInfo.notAfter}}\n\n</text>
-    <text>证书状态: {{certInfo.statusName}}</text>
-    <view a:if = "{{certInfo.status == 2000}}">
-        <!-- 正常状态的证书才能扫码 -->
-        <button size="default" type="primary" onTap="scan"><icon type="search"></icon>我是扫码图标</button>
-    </view>
+<view class="indexBg">
+  <image mode="widthFix" src="../../../images/index.jpg" style="width:100%;"/>
+</view>
+
+<view class="plr40 sgin">
+  <view class="userInfo">
+    <view class="label">证书序列号</view>
+    <text>{{certInfo.sn}}</text>
+  </view>
+  <view class="userInfo">
+    <view class="label">证书名称</view><text>{{certInfo.name}}</text>
+  </view>
+  <view class="userInfo">
+    <view class="label">证件号码</view><text>{{certInfo.code}}</text>
+  </view>
+  <view class="userInfo">
+    <view class="label">有效期</view><text>{{certInfo.notBefore}} - {{certInfo.notAfter}}</text>
+  </view>
+  <view class="userInfo">
+    <view class="label">证书状态</view><text>{{certInfo.statusName}}</text>
+  </view>
+  <view a:if = "{{certInfo.status == 2000}}">
+      <!-- 正常状态的证书才能扫码 -->
+      <button size="default" type="primary" onTap="scan"><icon type="search"></icon>我是扫码图标</button>
+  </view>
 </view>

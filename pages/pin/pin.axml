@@ -1,5 +1,26 @@
-<view>
-   <view> 应用信息：{{appName}}</view>
-    <view> 用途：{{use}}</view>
-    输入pin码：<input password="true" maxlength="6" name="code" onInput="pinInput" onConfirm="pinConfirm"/>
+<view class="sysInfoBg">
+  <view style="background:#fff;padding:50rpx 0rpx;">
+    <view>
+      <view class="operate">
+        <text>您正在<text class="blue">{{appName}}</text>进行<text class="blue">{{use}}</text></text>
+      </view>
+    </view>
+    <image class="mt30" mode="widthFix" style="width:325rpx;" src="/images/7-2.png"/>
+    <view class="mt50">请输入pin码</view>
+    <view class="mt30">
+        <input class="pin" password="true" maxlength="6" name="code" onInput="pinInput"/>
+    </view>
+  </view>
 </view>
+
+<!-- <view style="position: relative;">
+  <view class="input">
+    <input class='inputText' value='{{input1}}'></input>
+    <input class='inputText' value='{{input2}}'></input>
+    <input class='inputText' value='{{input3}}'></input>
+    <input class='inputText' value='{{input4}}'></input>
+    <input class='inputText' value='{{input5}}'></input>
+    <input class='inputText' value='{{input6}}'></input>
+  </view>
+  <input class='inputnum' auto-focus="true" maxlength='6' type='number' bindinput="inputnum"></input>
+</view> -->

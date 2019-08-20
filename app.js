@@ -58,6 +58,8 @@ App({
                 if(param == null || param == undefined){
                      param = {};
                 }
+                //生产环境这一行去掉
+                console.info(param);
                 dd.httpRequest({
                     url: url,
                     method: 'POST',
@@ -66,6 +68,8 @@ App({
                     dataType: 'json',
                     success: function(res) {
                         successFun(res);
+                        //生产环境这一行去掉
+                        console.info(res);
                     },
                     fail: function(res) {
                         if (errorFun != null) {

@@ -1,0 +1,11 @@
+
+.indexBg{
+  padding-bottom: 10rpx;
+  background: #f1f1f1;
+}
+
+.sysInfoBg{
+  padding:20rpx 0rpx;
+  background: #f1f1f1;
+  text-align: center;
+}

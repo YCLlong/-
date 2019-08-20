@@ -9,6 +9,7 @@
     "pages/success/success"
   ],
   "window": {
-    "defaultTitle": "云证书"
+    "defaultTitle": "云证书",
+    "titleBarColor": "#388FEE"
   }
 }

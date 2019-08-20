@@ -1,3 +1,4 @@
+
 Page({
     data: {},
     onLoad(query) {
@@ -71,3 +72,4 @@ Page({
         }
     }
 });
+ 

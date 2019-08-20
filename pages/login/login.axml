@@ -1,6 +1,23 @@
-<view>
-    <image style="width:250rpx;height:150rpx;" src="/images/app.png"/>
-    <text>\n\n需要获取您的头像信息\n\n</text>
-    <text>需要获取您的身份信息</text>
-    <button size="default" type="primary" onTap="login">登录</button>
+
+<view class="loginBg">
+  <view class="loginTitleBg"></view>
+  <image class="logo" src="../../../images/logo.png" />
+  <view class="title">
+    <text>云证书</text>
+  </view>
+</view>
+<view class="plr40" style="background:#fff;padding-top:40rpx;padding-bottom:20rpx;">
+  <view class="tips1">
+    <text>
+      为了您便于满足办理<text class="fwb plr5 tc">云证书</text>实名制的要求，需要您使用云证书认证服务，并在认证完成后，授权一下信息：
+    </text>
+  </view>
+  <view class="mt30">
+    <view  class="tips2"><text class="point">●</text><text>获取您的公开信息（昵称、头像、性别等）；</text></view>
+    <view class="tips2"><text class="point">●</text><text>使用您的身份信息（手机号码、证件号码）办理业务。</text></view>
+  </view>
+</view>
+<view class="plr50 mt30">
+  <view class="tip3 mb30">开始认证即表示<text class="plr10" style="color:#388FEE;">《认证服务协议》</text></view>
+  <button size="default" type="primary" onTap="login">开始登录</button>
 </view>

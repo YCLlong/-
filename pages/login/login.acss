@@ -1,0 +1,54 @@
+@import "../../css/globe.acss";
+@import "../../css/base.acss";
+page {
+  background-color:#f1f1f1;
+}
+text{
+  margin-bottom:10rpx;
+}
+.title{
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: bold;
+  position: relative;
+  margin-top:10rpx;
+}
+.loginBg{
+  text-align: center;
+  background:#fff;
+}
+.loginTitleBg{
+  background-image: url(../../images/loginbg.jpg);
+  width:750rpx;
+  height:253.5rpx;
+  background-size:cover;
+}
+.logo{
+  width:120rpx;
+  height:120rpx;
+  box-shadow: 3rpx 3rpx 10rpx #999;
+  border-radius: 25rpx;
+  position: relative;
+  margin-top: -60rpx;
+}
+.tips1{
+  border-bottom: 1px solid #ccc;
+  padding:0px 10rpx;
+  padding-bottom:30rpx;
+}
+.tips2{
+  color: #aaa;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 24rpx;
+}
+.tip3{
+  color: #aaa;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+.point{
+  vertical-align: top;
+  font-size: 14rpx;
+  padding: 0px 10rpx;
+}

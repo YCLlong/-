@@ -1,17 +1,31 @@
-<view>
+<view class="indexBg">
+  <image mode="widthFix" src="../../../images/index.jpg" style="width:100%;"/>
+</view>
+
+<view class="plr40 sgin">
     <form onSubmit="certApply">
         <view class="section">
-            <view>姓名</view>
-            <input name="name" placeholder="请输入姓名" onInput="nameInput" value="小龙"/>
-            <view>身份证号码</view>
-            <input name="idCode" placeholder="请输入身份证号码" type="idcard" value="110101199003073490"/>
-            <view>手机号</view>
-            <input name="mobile" placeholder="请输入手机号" type="number" maxlength="11" value="18256079056"/>
-            <view>pin码</view>
-            <input name="pin" password="true" placeholder="请输入pin码"  maxlength="6" value="123456"/>
-            <view>确认pin码</view>
-             <input name="pinConfirm" password="true" placeholder="请确认pin码"  maxlength="6" value="123456"/>
-            <button formType="submit"  type="primary">申请</button>
+          <view class="userInfo">
+            <view class="label">姓名</view>
+            <input name="name" placeholder="请输入姓名" onInput="nameInput" />
+          </view>
+          <view class="userInfo">
+            <view class="label">身份证号码</view>
+            <input name="idCode" placeholder="请输入身份证号码" type="idcard" />
+          </view>
+          <view class="userInfo">
+            <view class="label">手机号</view>
+            <input name="mobile" placeholder="请输入手机号" type="number" maxlength="11"/>
+          </view>
+          <view class="userInfo">
+            <view class="label">请输入pin码</view>
+            <input name="pin" password="true" placeholder="请输入pin码"  maxlength="6"/>
+          </view>
+          <view class="userInfo">
+            <view class="label">请确认pin码</view>
+             <input name="pinConfirm" password="true" placeholder="请确认pin码"  maxlength="6"/>
+          </view>
+            <button class="mt50" formType="submit"  type="primary">申请</button>
         </view>
     </form>
 </view>
