@@ -351,9 +351,7 @@ function getParameter(name, url) {
 }
 
 
-/**
- * 暴露方法1，不然钉钉小程序外部无法访问到
- */
+
 module.exports = {
     analyseCert: analyseCert,
     analyseCode: analyseCode,

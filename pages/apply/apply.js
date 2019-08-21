@@ -91,7 +91,7 @@ Page({
 
                     var url = "/pages/index/index" + paramUtils.certUrl(certInfo);
                     //跳转到主页
-                    dd.reLaunch({
+                    dd.redirectTo({
                         url: url
                     });
                 } else {

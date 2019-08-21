@@ -1,11 +1,11 @@
 <view class="sysInfoBg">
     <view style="background:#fff;padding:50rpx 0rpx;">
         <image mode="widthFix" style="width:325rpx;" src="/images/5-1.png"/>
-        <view class="mt30" a:if = "{{msg != null && msg != ''}}">错误详情：{{msg}}</view>
-        <view a:if = "{{tip != null && tip != ''}}">提示：{{tip}}</view>
+        <view class="mt30" a:if = "{{msg != null && msg != ''}}">{{msg}}</view>
+        <view a:if = "{{tip != null && tip != ''}}">{{tip}}</view>
     </view>
 </view>
-<view a:if="{{backUrl != null}}">
+<view a:if="{{backUrl != undefined && backUrl != null && backUrl != ''}}">
     <view class="plr40">
         <button class="mt50" size="default" type="primary" onTap="goBack">返回</button>
     </view>

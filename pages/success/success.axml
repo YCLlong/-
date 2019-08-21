@@ -3,7 +3,7 @@
   <view a:if = "{{msg != null && msg != ''}}">{{msg}}</view>
 </view>
 
-<view a:if="{{backUrl != null}}">
+<view a:if="{{backUrl != undefined && backUrl != null && backUrl != ''}}">
     <view class="plr40">
         <button class="mt50" size="default" type="primary" onTap="goBack">返回</button>
     </view>

@@ -77,6 +77,13 @@ Page({
                             url: "/pages/index/index" + paramUtils.codeUrl(codeInfo)
                         });
                     } else {
+                        //4016表示证书不存在
+                        if(respData.code == '4016'){
+                            dd.reLaunch({
+                                url: "/pages/index/index" + paramUtils.codeUrl(codeInfo)
+                            });
+                            return;
+                        }
                         //跳转到错误页面
                         msg.gotoErrorPage(respData.msg, null, null);
                     }
