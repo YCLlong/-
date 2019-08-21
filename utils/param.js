@@ -155,10 +155,11 @@ function cerateCodeInfoUrlParam(codeInfo) {
         return "?bizToken=";
     }
     //bizToken,业务token
-    url = "?bizToken="
+    let url = "?bizToken=";
     if (codeInfo.bizToken != undefined && codeInfo.bizToken != null) {
         url = url + codeInfo.bizToken;
     }
+  
     return url;
 }
 
@@ -193,7 +194,7 @@ function dealServerResponse(res) {
 
     //TEST 模拟服务响应正确
     //res.success = 'true';
-
+  
     if (!res instanceof Object || res.data == undefined || res.data == null || res.data.success == undefined || res.data.success == null || res.data.success == '' || !(res.data.success == 'true' || res.data.success == 'false')) {
         resp.success = false;
         resp.msg = '服务端返回参数不正确';
@@ -211,7 +212,7 @@ function dealServerResponse(res) {
                     content: '您的登录身份已过期，需要重新登录',
                     buttonText: '重新登录',
                     success: () => {
-                        dd.reLaunch({
+                        dd.redirectTo({
                             url: '/pages/login/login'
                         });
                         return;
@@ -233,10 +234,12 @@ function dealServerResponse(res) {
     } else {
         resp.msg = data.msg;
     }
-
     if (data.data == undefined || data.data == null || data.data == '') {
         resp.data == {};
+    }else {
+         resp.data = data.data;
     }
+     
     return resp;
 }
 
@@ -309,12 +312,10 @@ function certApplyRequestParam(applyInfo, userToken) {
  * @param codeInfo 二维码信息封装
  * @param token   登录后获得的token,时效30分钟的后续调用凭证
  */
-function certUseRequestParam(codeInfo, token) {
-    var param = createRequestParam('1005');
-    param.msgData.appCode = codeInfo.appCode;
-    param.msgData.webId = codeInfo.webId;
-    param.msgData.methodType = codeInfo.methodType;
-    param.msgData.token = token;
+function certUseRequestParam(codeInfo,userToken) {
+    var param = createRequestParam('accAuthUse');
+    param.msgData.userToken = userToken;
+    param.msgData.token = codeInfo.bizToken;
     param.msgData = JSON.stringify(param.msgData);
     return param;
 }
@@ -325,9 +326,9 @@ function certUseRequestParam(codeInfo, token) {
  * @param pinHash pin码的哈希值
  */
 function verifyPinRequestParam(token, pinHash) {
-    var param = createRequestParam('1006');
+    var param = createRequestParam('pinCert');
     param.msgData.token = token;
-    param.msgData.pHash = pinHash;
+    param.msgData.pin = pinHash;
     param.msgData = JSON.stringify(param.msgData);
     return param;
 }

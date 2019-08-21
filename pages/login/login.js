@@ -4,9 +4,7 @@ Page({
         var paramUtils = require('/utils/param.js');
         //TEST 模拟扫码信息
         // query = {
-        //     appCode: '20190808155240KH2',
-        //     webId: '1',
-        //     methodType:'10'
+        //     bizToken: '20190808155240KH2'
         // }
 
         //第一次登录可能有二维码信息

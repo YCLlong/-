@@ -1,6 +1,6 @@
 App({
     //小程序后台接口网关
-    //GATE_WAY:'http://192.168.0.231:8080/spInterface/message/msg/GateWay.htm',
+    // GATE_WAY:'http://192.168.0.231:8080/spInterface/message/msg/GateWay.htm',
     GATE_WAY:'http://192.168.110.150:8080/spInterface/message/msg/GateWay.htm',
     //缓存中用户钉钉号标识
     DD_USER_CODE: 'ddUserCode',
@@ -145,7 +145,7 @@ App({
                 return;
             }
             var certUseToken = respData.data.token;
-            var use = respData.data.use;
+            var use = respData.data.methodTypeName;
             var appName = respData.data.appName;
             if (verifyUtils.isBlank(certUseToken) || verifyUtils.isBlank(use) || verifyUtils.isBlank(appName)) {
                 msgUtils.gotoErrorPage("服务器返回参数错误",null,'/pages/cert/cert');
