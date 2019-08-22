@@ -1,11 +1,8 @@
 Page({
     data: {},
     onLoad(query) {
+         //页面加载
         var paramUtils = require('/utils/param.js');
-        //TEST 模拟扫码信息
-        // query = {
-        //     bizToken: '20190808155240KH2'
-        // }
 
         //第一次登录可能有二维码信息
         var codeInfo = paramUtils.analyseCode(query);
@@ -13,17 +10,12 @@ Page({
         this.setData({
             codeInfo: codeInfo
         });
-        //页面加载
         var app = getApp();
         var userCode = app.genUserCode();
         if (userCode != null && userCode != '') {
             //免密登录
             this.loginNoPwd(userCode, codeInfo);
         }
-        // } else {
-        //     //授权登录  
-        //     this.loginAuth(codeInfo, this);
-        // }
     },
     onPullDownRefresh() {
         dd.stopPullDownRefresh();
@@ -92,9 +84,11 @@ Page({
             } else {
                 dd.hideLoading();
                 //4020表示用户不存在，不提示
-                if(resData.code != '4020'){
-                    msg.errorMsg(resData.msg);
+                if(resData.code == '4020'){
+                    msg.errorMsg("免登身份过期，需要您重新登录");
+                    return;
                 }
+                 msg.errorMsg(resData.msg);
             }
         }, null);
     },

@@ -205,7 +205,8 @@ function dealServerResponse(res) {
     var data = res.data;
     if (data.success == 'false') {
         if (data.code != undefined && data.code != null && data.code != '') {
-            if (data.code == '4003') {
+            //错误码4046表示token过期
+            if (data.code == '4046') {
                 //本来想给用户取消重新登录的操作，无奈钉钉没有提供退出小程序的方法
                 dd.alert({
                     title: '温馨提示',
