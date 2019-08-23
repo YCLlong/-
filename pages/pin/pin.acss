@@ -1,47 +1,42 @@
 
-@import "../../css/globe.acss";
-@import "../../css/base.acss";
-
 page{
   background: #f1f1f1;
 }
 .operate text{
-  font-size:50rpx;
+  font-size:40rpx;
   font-weight: bold;
 }
 .operate  .blue{
   color:#388FEE;
 }
 .pin{
-  letter-spacing: 30px;
-  font-size:80rpx;
-  text-align: left;
-  border-bottom:1px solid #ccc;
-  width:180rpx;
+  padding:0px 160rpx;
+  margin:0px auto;
 }
-
 .content{
   display: flex;
-  justify-content: space-around;
+  justify-content : space-around;
   align-items: center;
-  margin-top: 200rpx;
+  text-align: center;
+  margin-top: 30rpx;
 }
-.iptbox{
-  width: 80rpx;
-  height: 80rpx;
-  border:1rpx solid #ddd;
-  border-radius: 20rpx;
+.iptBorder{
+  font-size:80rpx;
+  width: 60rpx;
+  height: 100rpx;
+  border-bottom:4rpx solid #ccc;
+  margin:0px 15rpx;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  font-weight:blod;
 }
-.ipt{
-  width: 0;
-  height: 0;
+
+.ipt{z-index: -10;position: relative;
 }
 .btn-area{
   width: 80%;
-  background-color: orange;
-  color:white;
+  margin-top: 60rpx;
 }

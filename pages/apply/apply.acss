@@ -2,10 +2,6 @@
     width: 20rpx;
 }
 
-@import "../../css/globe.acss";
-@import "../../css/base.acss";
-
-
 .label{
   width:180rpx;
   display: inline-block;

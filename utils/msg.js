@@ -43,7 +43,7 @@ function gotoErrorPage(errorMsg, tip, backUrl) {
     if (backUrl != null && backUrl != undefined && backUrl != '') {
         url = url + backUrl;
     }
-    dd.navigateTo({
+    dd.redirectTo({
         url: url
     });
 }
@@ -63,7 +63,7 @@ function gotoSuccessPage(msg,backUrl){
     if (backUrl != null && backUrl != undefined && backUrl != '') {
         url = url + backUrl;
     }
-    dd.navigateTo({
+    dd.redirectTo({
         url: url
     });
 }

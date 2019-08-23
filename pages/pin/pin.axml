@@ -5,22 +5,13 @@
         <text>您正在<text class="blue">{{appName}}</text>进行<text class="blue">{{use}}</text></text>
       </view>
     </view>
+    <view class="mt50" style="font-size:30rpx;">请在下方输入您的pin码</view>
     <image class="mt30" mode="widthFix" style="width:325rpx;" src="/images/7-2.png"/>
-    <view class="mt50">请输入pin码</view>
-    <view class="mt30">
-        <input class="pin" password="true" maxlength="6" name="code" onInput="pinInput"/>
+    <view class="pin">
+      <view class='content' onTap="bindButtonTap">
+        <input data-index ='{{index+1}}' a:for="{{Length}}" a:key="item" class='iptBorder'  value="{{Value.length>=index+1?Value[index]:''}}" disabled password='{{ispassword}}' ></input>
+      </view>
+        <input class="ipt" type="number" password="{{true}}" class='ipt' maxlength="{{Length}}" focus="{{focus}}" onFocus="onFocus" onBlur="onBlur" onInput="inputPin"/>
     </view>
   </view>
 </view>
-
-<!-- <view style="position: relative;">
-  <view class="input">
-    <input class='inputText' value='{{input1}}'></input>
-    <input class='inputText' value='{{input2}}'></input>
-    <input class='inputText' value='{{input3}}'></input>
-    <input class='inputText' value='{{input4}}'></input>
-    <input class='inputText' value='{{input5}}'></input>
-    <input class='inputText' value='{{input6}}'></input>
-  </view>
-  <input class='inputnum' auto-focus="true" maxlength='6' type='number' bindinput="inputnum"></input>
-</view> -->

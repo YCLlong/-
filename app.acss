@@ -1,0 +1,65 @@
+
+.indexBg{
+  padding-bottom: 10rpx;
+  background: #f1f1f1;
+}
+
+.sysInfoBg{
+  padding:20rpx 0rpx;
+  background: #f1f1f1;
+  text-align: center;
+}
+
+
+.dpib{
+  display: inline-block;
+}
+.f14{
+  font-size: 14rpx;
+}
+.tc{
+  text-align: center;
+}
+.fwb{
+  font-weight: bold;
+}
+.plr5{
+  padding:0px 10rpx;
+}
+.plr10{
+  padding:0px 10rpx;
+}
+.plr40{
+  padding:0px 40rpx;
+}
+.plr50{
+  padding:0px 50rpx;
+}
+
+.mt20{
+  margin-top:20rpx;
+}
+.mt30{
+  margin-top:30rpx;
+}
+.mt40{
+  margin-top:40rpx;
+}
+.mt50{
+  margin-top:50rpx;
+}
+.mt60{
+  margin-top:60rpx;
+}
+.mb20{
+  margin-bottom:20rpx;
+}
+.mb30{
+  margin-bottom:30rpx;
+}
+.mb40{
+  margin-bottom:40rpx;
+}
+.mb50{
+  margin-bottom:50rpx;
+}
