@@ -59,7 +59,6 @@ Page({
                     var respData = paramUtils.resp(certRes);
                     dd.hideLoading();
                     //只有用户证书信息为正常状态时，才会返回success
-                    debugger;
                     if (respData.success) {
                         var certInfo = paramUtils.analyseCert(respData.data);
                         if (certInfo != null) {
@@ -146,9 +145,8 @@ Page({
      * @param certInfo 证书信息
      */
     route(codeInfo,certInfo){
-        debugger;
         if(certInfo != null){
-            if(certInfo != null){
+            if(codeInfo != null){
                 var app = getApp();
                 app.certUseApply(codeInfo);
             }else{
