@@ -36,6 +36,7 @@ Page({
         var app = getApp();
         var paramUtils = require('/utils/param.js');
         var msg = require('/utils/msg.js');
+        var pageObject = this;
         //API1，用免登Token去登录系统
         var loginParam = paramUtils.loginNoPwdParam(userCode);
         app.request(app.GATE_WAY, loginParam, function(res) {
@@ -58,29 +59,25 @@ Page({
                     var respData = paramUtils.resp(certRes);
                     dd.hideLoading();
                     //只有用户证书信息为正常状态时，才会返回success
+                    debugger;
                     if (respData.success) {
                         var certInfo = paramUtils.analyseCert(respData.data);
                         if (certInfo != null) {
                             app.existCert = true;
                             app.certInfo = certInfo;
                         }
-                        //跳转到主页
-                        dd.reLaunch({
-                            url: "/pages/index/index" + paramUtils.codeUrl(codeInfo)
-                        });
+                        //跳转
+                        pageObject.route(codeInfo,certInfo);
                     } else {
-                        //4016表示证书不存在
-                        if(respData.code == '4016'){
-                            dd.reLaunch({
-                                url: "/pages/index/index" + paramUtils.codeUrl(codeInfo)
-                            });
-                            return;
+                        //4016表示用户还没申请证书
+                        if(respData.code != '4016'){
+                             //跳转到错误页面
+                            msg.gotoErrorPage(respData.msg, null, null);
                         }
-                        //跳转到错误页面
-                        msg.gotoErrorPage(respData.msg, null, null);
+                       
                     }
 
-                },null);
+                },null,pageObject);
             } else {
                 dd.hideLoading();
                 //4020表示用户不存在，不提示
@@ -90,7 +87,7 @@ Page({
                 }
                  msg.errorMsg(resData.msg);
             }
-        }, null);
+        }, null,pageObject);
     },
 
     /**
@@ -142,4 +139,28 @@ Page({
             }
         });
     },
+
+    /**
+     * 登录成功之后跳转页面的逻辑
+     * @param codeInfo 二维码信息，或者是进入小程序时携带的信息
+     * @param certInfo 证书信息
+     */
+    route(codeInfo,certInfo){
+        debugger;
+        if(certInfo != null){
+            if(certInfo != null){
+                var app = getApp();
+                app.certUseApply(codeInfo);
+            }else{
+                dd.redirectTo({
+                    url: '/pages/cert/cert'
+                });
+            }
+        }else{
+            dd.redirectTo({
+                url: '/pages/index/index'
+            });
+        }
+
+    }
 });

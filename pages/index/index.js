@@ -5,30 +5,7 @@ Page({
         existCode: false,
         codeInfo: {}
     },
-    /**
-     * @param   query   通过类似url地址 get请求传递到页面的参数
-     * 
-     */
-    onLoad(query) {
-        var app = getApp();
-        var paramUtils = require("/utils/param.js");
-        var codeInfo = paramUtils.analyseCode(query);
-        if (codeInfo != null) {
-            this.setData({
-                existCode: true,
-                codeInfo: codeInfo
-            });
-        }
-        if(app.existCert){
-            this.setData({
-                existCert: true,
-                certInfo: app.certInfo
-            });
-        }
-        
-        //页面路由
-        this.route();
-    },
+  
     onPullDownRefresh() {
         // 下拉更新证书信息
         // var app = getApp();
@@ -94,21 +71,4 @@ Page({
             },
         });
     },
-    
-
-    /**
-     * 页面逻辑跳转
-     */
-    route(){
-         //如果存在code，且存在二维码信息，直接跳转到pin码输入界面
-        if(this.data.existCert && this.data.existCode){
-            var app = getApp();
-            app.certUseApply(this.data.codeInfo);
-            return;
-        }else if(this.data.existCert){
-            dd.redirectTo({
-                url: '/pages/cert/cert'
-            });
-        }
-    }
 });

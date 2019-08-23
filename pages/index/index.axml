@@ -2,19 +2,9 @@
   <image mode="widthFix" src="/images/index.jpg" style="width:100%;"/>
 </view>
 <view class="plr40">
-    <!-- 用户已有证书 -->
-    <view a:if = "{{existCert}}">
-        <view class="tc mt50" a:if = "{{certInfo.status == 1000}}">
-          <image class="mt30" mode="widthFix" src="../../../images/3-3.png" style="width:325rpx;"/>
-            <!-- 等待签发的界面。下拉查询最新状态的证书信息 -->
-            <view>{{certInfo.name}}</view>
-            <view>{{certInfo.code}}</view>
-            <view class="mt50"><text>证书正在签发中，请等待。</text></view>
-        </view>
-    </view>
     <!-- 用户还没有申请证书 -->
-    <view class="tc mt50" a:else>
-        <image class="mt30" mode="widthFix" src="../../../images/3-2.png" style="width:325rpx;"/>
+    <view class="tc mt50">
+        <image class="mt30" mode="widthFix" src="/images/3-2.png" style="width:325rpx;"/>
         <view class="mt50"><text>抱歉，您还没有申请证书!</text></view>
         <button class="mt50" size="default" type="primary" onTap="apply">申请证书</button>
     </view>

@@ -56,10 +56,10 @@ Page({
                 //服务器返回pin码错误，或者别的问题的回调
                 dd.hideLoading();
                 //4018表示pin码错误
-                if(errorData.code == '4018'){
+                if (errorData.code == '4018') {
                     msgUtils.errorMsg('pin码输入错误');
-                }else{
-                    msgUtils.gotoErrorPage(errorData.msg,null,'/pages/cert/cert');
+                } else {
+                    msgUtils.gotoErrorPage(errorData.msg, null, '/pages/cert/cert');
                 }
             });
         } else {
@@ -111,5 +111,20 @@ Page({
                 successFun(respData, pageObject);
             }
         }, null, pageObject);
-    }
+    },
+
+    onUnload() {
+        let app = getApp();
+        if (app.existCert) {
+            dd.redirectTo({
+                url: '/pages/cert/cert'
+            });
+        } else {
+            dd.redirectTo({
+                url: '/pages/login/login'
+            });
+        }
+
+    },
+
 });

@@ -69,7 +69,7 @@ Page({
             var respData = paramUtils.resp(res);
             if (!respData.success) {
                 dd.hideLoading();
-                msg.errorMsg(respData.msg);
+                msg.gotoErrorPage(respData.msg,'/pages/apply/apply');
                 return;
             }
             //请求服务器，获取当前用户的证书信息

@@ -16,6 +16,10 @@ Page({
                 existCert: true,
                 certInfo:certInfo
             });
+        }else{
+            dd.redirectTo({
+                url:'/pages/index/index'
+            });
         }
     },
     /**
