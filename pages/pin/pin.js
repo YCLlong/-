@@ -55,7 +55,12 @@ Page({
             }, function(errorData, pageObject) {
                 //服务器返回pin码错误，或者别的问题的回调
                 dd.hideLoading();
-                msgUtils.errorMsg('pin码输入错误');
+                //4018表示pin码错误
+                if(errorData.code == '4018'){
+                    msgUtils.errorMsg('pin码输入错误');
+                }else{
+                    msgUtils.gotoErrorPage(errorData.msg,null,'/pages/cert/cert');
+                }
             });
         } else {
             this.setData({
