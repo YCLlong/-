@@ -69,11 +69,15 @@ Page({
                         pageObject.route(codeInfo,certInfo);
                     } else {
                         //4016表示用户还没申请证书
-                        if(respData.code != '4016'){
-                             //跳转到错误页面
+                        if(respData.code == '4016'){
+                             //不存在证书
+                            certInfo = null;
+                            pageObject.route(codeInfo,certInfo);     
+                        }else{
+                            //跳转到错误页面
                             msg.gotoErrorPage(respData.msg, null, null);
+                            return;
                         }
-                       
                     }
 
                 },null,pageObject);

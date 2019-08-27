@@ -1,7 +1,8 @@
 App({
     //小程序后台接口网关
-     //GATE_WAY:'http://192.168.0.231:8080/spInterface/message/msg/GateWay.htm',
-    GATE_WAY:'http://192.168.110.150:8080/spInterface/message/msg/GateWay.htm',
+    //GATE_WAY:'http://192.168.0.231:8080/spInterface/message/msg/GateWay.htm',
+    //GATE_WAY:'http://192.168.110.150:8080/spInterface/message/msg/GateWay.htm',
+    GATE_WAY:'http://60.190.254.12:9003/spInterface/message/msg/GateWay.htm',
     //缓存中用户钉钉号标识
     DD_USER_CODE: 'ddUserCode',
 
@@ -11,11 +12,6 @@ App({
 
 
     onLaunch(options) {
-        // var param = '?appCode=123'
-        // dd.redirectTo({
-        //     url: '/pages/login/login' + param
-        // });
-        // return;
         // 第一次打开
         if(options.query != null){
             var paramUtils = require("/utils/param.js");
