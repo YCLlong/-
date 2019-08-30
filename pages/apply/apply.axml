@@ -11,7 +11,7 @@
           </view>
           <view class="userInfo">
             <view class="label">身份证号码</view>
-            <input name="code" placeholder="请输入身份证号码" type="idcard" />
+            <input name="code" placeholder="请输入身份证号码" maxlength="18" />
           </view>
           <view class="userInfo">
             <view class="label">手机号</view>

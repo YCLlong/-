@@ -140,8 +140,10 @@ Page({
                 }, null);
             },
             fail:function(err){
-                 dd.hideLoading();
-                 msg.errorMsg("钉钉小程序获取用户授权码时失败");
+                dd.hideLoading();
+                dd.alert({
+                    content:JSON.stringify(err)
+                });
             }
         });
     },

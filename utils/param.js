@@ -59,7 +59,7 @@ function analyseCode(query) {
     //解析二维码信息
     if ( query != undefined && query != null &&  query.bizToken != undefined && query.bizToken != null && query.bizToken != '') {
         var codeInfo = {
-            bizToken : query.bizToken//业务token
+            bizToken : query.bizToken.replace(/^\s*|\s*$/g,"")//业务token,去掉两端的空格
         };
         return codeInfo;
     }
