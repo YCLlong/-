@@ -3,7 +3,6 @@ Page({
     onLoad(query) {
          //页面加载
         var paramUtils = require('/utils/param.js');
-
         //第一次登录可能有二维码信息
         var codeInfo = paramUtils.analyseCode(query);
         
@@ -86,9 +85,9 @@ Page({
                 //4020表示用户不存在，不提示
                 if(resData.code == '4020'){
                     msg.errorMsg("免登身份过期，需要您重新登录");
-                    return;
+                }else{
+                    msg.errorMsg(resData.msg);
                 }
-                 msg.errorMsg(resData.msg);
             }
         }, null,pageObject);
     },
@@ -139,6 +138,10 @@ Page({
                         msg.errorMsg(resData.msg);
                     }
                 }, null);
+            },
+            fail:function(err){
+                 dd.hideLoading();
+                 msg.errorMsg("钉钉小程序获取用户授权码时失败");
             }
         });
     },
