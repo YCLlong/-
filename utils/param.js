@@ -352,6 +352,14 @@ function getParameter(name, url) {
 }
 
 
+/**
+ * app启动时，解析参数
+ */
+function onloadParseParam(query){
+    return cerateCodeInfoUrlParam(query);
+}
+
+
 
 module.exports = {
     analyseCert: analyseCert,
@@ -367,5 +375,6 @@ module.exports = {
     certApplyParam: certApplyRequestParam,
     certUseParam: certUseRequestParam,
     verifyPinParam: verifyPinRequestParam,
-    getParameter: getParameter
+    getParameter: getParameter,
+    onloadParseParam:onloadParseParam
 }
