@@ -78,7 +78,7 @@ Page({
                 dd.hideLoading();
                 var respData = paramUtils.resp(certRes);
                 if (respData.success) {
-                    var certInfo = respData.data.certData;
+                    var certInfo = respData.data;
                     //TEST 模拟获取用户信息
                     // certInfo = {
                     //     name: '小龙',
@@ -88,8 +88,11 @@ Page({
                     //     notAfter: '2020年8月1日',
                     //     status: 2000
                     // };
-
-                    var url = "/pages/index/index" + paramUtils.certUrl(certInfo);
+                    if (certInfo !=undefined && certInfo != null) {
+                        app.existCert = true;
+                        app.certInfo = certInfo;
+                    }
+                    var url = "/pages/cert/cert";
                     //跳转到主页
                     dd.redirectTo({
                         url: url
