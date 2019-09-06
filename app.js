@@ -1,8 +1,8 @@
 App({
     //小程序后台接口网关
     //GATE_WAY:'http://192.168.0.231:8080/spInterface/message/msg/GateWay.htm',
-    GATE_WAY:'http://192.168.166.238:8080/spInterface/message/msg/GateWay.htm',
-    //GATE_WAY: 'http://60.190.254.12:9003/spInterface/message/msg/GateWay.htm',
+   // GATE_WAY:'http://192.168.166.238:8080/spInterface/message/msg/GateWay.htm',
+    GATE_WAY: 'http://60.190.254.12:9003/spInterface/message/msg/GateWay.htm',
     //缓存中用户钉钉号标识
     DD_USER_CODE: 'ddUserCode',
 
@@ -47,7 +47,7 @@ App({
                     param = {};
                 }
                 //生产环境这一行去掉
-                console.info(param);
+                console.info(JSON.stringify(param));
                 dd.httpRequest({
                     url: url,
                     method: 'POST',
@@ -57,7 +57,7 @@ App({
                     success: function(res) {
                         successFun(res);
                         //生产环境这一行去掉
-                        console.info(res);
+                        console.info(JSON.stringify(res));
                     },
                     fail: function(res) {
                         if (errorFun != null) {
@@ -142,7 +142,10 @@ App({
 
             //跳转pin码输入界面
             dd.navigateTo({
-                url: '/pages/pin/pin?token=' + certUseToken + '&use=' + use + '&appName=' + appName
+                url: '/pages/pin/pin?token=' + certUseToken + '&use=' + use + '&appName=' + appName,
+                fail:function(e){
+                     msgUtils.gotoErrorPage("跳转页面时出错", null, '/pages/cert/cert');
+                }
             });
         }, null);
     }

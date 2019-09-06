@@ -31,7 +31,14 @@ Page({
         dd.scan({
             type: 'qr',
             success: (res) => {
-                var query = paramUtils.getParameter('query', res.code);
+
+                var query = null;
+                try{
+                    query = paramUtils.getParameter('query', res.code);
+                }catch(e){
+                    query = null;
+                }
+                
                 if(query == null){
                     msgUtils.gotoErrorPage('我们不能处理这个二维码',null,'/pages/cert/cert');
                     //dd.alert({ title: '二维码内容', content: res.code });
