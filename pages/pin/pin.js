@@ -12,7 +12,8 @@ Page({
         this.setData({
             token: query.token,
             use: query.use,
-            appName: query.appName
+            appName: query.appName,
+            oneBack:true
         });
     },
 
@@ -51,6 +52,9 @@ Page({
             this.pin(v, function(successData, pageObject) {
                 //服务器返回pin码正确的回调
                 dd.hideLoading();   //关闭遮罩层
+                this.setData({
+                    oneBack:false
+                });
                 msgUtils.gotoSuccessPage('操作成功', '/pages/cert/cert');
             }, function(errorData, pageObject) {
                 //服务器返回pin码错误，或者别的问题的回调
@@ -59,6 +63,9 @@ Page({
                 if (errorData.code == '4018') {
                     msgUtils.errorMsg('pin码输入错误');
                 } else {
+                      this.setData({
+                            oneBack:false
+                        });
                     msgUtils.gotoErrorPage(errorData.msg, null, '/pages/cert/cert');
                 }
             });
@@ -98,9 +105,6 @@ Page({
         let pageObject = this;
         app.request(app.GATE_WAY, param, function(res) {
             var respData = paramUtils.resp(res);
-            //TEST 模拟pin码结果
-            //respData.success = true;
-
             if (!respData.success) {
                 if (errorFun == null) {
                     msg.errorMsg(respData.msg);
@@ -113,18 +117,22 @@ Page({
         }, null, pageObject);
     },
 
-    onUnload() {
-        let app = getApp();
-        if (app.existCert) {
-            dd.redirectTo({
-                url: '/pages/cert/cert'
-            });
-        } else {
-            dd.redirectTo({
-                url: '/pages/login/login'
-            });
-        }
-
-    },
+    // onUnload() {
+    //     dd.alert({
+    //         content:this.data.oneBack
+    //     });
+    //     if(this.data.oneBack){
+    //         let app = getApp();
+    //         if (app.existCert) {
+    //             dd.redirectTo({
+    //                 url: '/pages/cert/cert'
+    //             });
+    //         } else {
+    //             dd.redirectTo({
+    //                 url: '/pages/login/login'
+    //             });
+    //         }
+    //     }
+    // },
 
 });

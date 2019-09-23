@@ -26,9 +26,19 @@ Page({
     },
 
     goBack() {
-        if (this.data.backUrl != null) {
+         let backUrl = this.data.backUrl;
+        
+        if (backUrl != undefined && backUrl != null && backUrl != '') {
+             this.setData({
+                backUrl:null
+            });
             dd.redirectTo({
-                url: this.data.backUrl
+                url: backUrl,
+                fail:function(e){
+                    dd.alert({
+                        content: '页面跳转失败，详情:' + JSON.stringify(e)
+                    });
+                }
             });
         }
     },

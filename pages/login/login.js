@@ -17,10 +17,6 @@ Page({
         }
     },
 
-    onPullDownRefresh() {
-        dd.stopPullDownRefresh();
-    },
-
     //点击登录按钮进行授权登录
     login() {
         this.loginAuth(this.data.codeInfo, this);

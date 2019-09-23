@@ -3,25 +3,26 @@ Page({
         existCert: false,
         certInfo: {}
     },
-    onLoad(query) {
+    onLoad() {
         var app = getApp();
-        if(app.existCert){
+        if (app.existCert) {
             var certInfo = app.certInfo;
-            if(app.certInfo.status == 2000){
+            if (app.certInfo.status == 2000) {
                 certInfo.statusName = '正常';
-            }else if(app.certInfo.status == 3000){
+            } else if (app.certInfo.status == 3000) {
                 certInfo.statusName = '锁定';
             }
             this.setData({
                 existCert: true,
-                certInfo:certInfo
+                certInfo: certInfo
             });
-        }else{
+        } else {
             dd.redirectTo({
-                url:'/pages/index/index'
+                url: '/pages/index/index'
             });
         }
     },
+
     /**
      * 扫二维码
      */
@@ -33,24 +34,24 @@ Page({
             success: (res) => {
 
                 var query = null;
-                try{
+                try {
                     query = paramUtils.getParameter('query', res.code);
-                }catch(e){
+                } catch (e) {
                     query = null;
                 }
-                
-                if(query == null){
-                    msgUtils.gotoErrorPage('我们不能处理这个二维码',null,'/pages/cert/cert');
+
+                if (query == null) {
+                    msgUtils.gotoErrorPage('我们不能处理这个二维码', null, '/pages/cert/cert');
                     //dd.alert({ title: '二维码内容', content: res.code });
                     return;
                 }
                 var paramContent = '?' + query;//decodeURIComponent();
                 var codeInfo = {};
-                codeInfo.bizToken = paramUtils.getParameter('bizToken',paramContent);
-                if( codeInfo.bizToken == null){
-                    msgUtils.gotoErrorPage('我们不能处理这个二维码',null,'/pages/cert/cert');
+                codeInfo.bizToken = paramUtils.getParameter('bizToken', paramContent);
+                if (codeInfo.bizToken == null) {
+                    msgUtils.gotoErrorPage('我们不能处理这个二维码', null, '/pages/cert/cert');
                     //dd.alert({ title: '二维码内容', content: res.code });
-                }else{
+                } else {
                     getApp().certUseApply(codeInfo);
                 }
             },
