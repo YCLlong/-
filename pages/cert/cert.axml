@@ -14,7 +14,10 @@
     <view class="label">证件号码</view><text>{{certInfo.code}}</text>
   </view>
   <view class="userInfo">
-    <view class="label">有效期</view><text>{{certInfo.notBefore}} - {{certInfo.notAfter}}</text>
+    <view class="label">有效起始</view><text>{{certInfo.notBefore}}</text>
+  </view>
+  <view class="userInfo">
+    <view class="label">有效截止</view><text>{{certInfo.notAfter}}</text>
   </view>
   <view class="userInfo">
     <view class="label">证书状态</view><text>{{certInfo.statusName}}</text>

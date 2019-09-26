@@ -57,18 +57,21 @@ Page({
 
 
     apply() {
-        dd.confirm({
-            title: '新领须知',
-            content: '这个是须知内容',
-            confirmButtonText: '同意',
-            cancelButtonText: '拒绝',
-            success: (result) => {
-                if (result.confirm) {
-                    dd.navigateTo({
-                        url: '/pages/apply/apply'
-                    });
-                }
-            },
+        // dd.confirm({
+        //     title: '新领须知',
+        //     content: '这个是须知内容',
+        //     confirmButtonText: '同意',
+        //     cancelButtonText: '拒绝',
+        //     success: (result) => {
+        //         if (result.confirm) {
+        //             dd.navigateTo({
+        //                 url: '/pages/apply/apply'
+        //             });
+        //         }
+        //     },
+        // });
+         dd.navigateTo({
+            url: '/pages/apply/apply'
         });
     },
 });

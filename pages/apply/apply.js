@@ -2,7 +2,33 @@ Page({
     data: {
 
     },
-    onLoad() { },
+    onLoad() { 
+         dd.showLoading({
+            content: '正在检测证书信息...'
+        });
+        var app = getApp();
+        var paramUtils = require('/utils/param.js');
+       //请求服务器，获取当前用户的证书信息
+        var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
+        app.request(app.GATE_WAY, certInfoParam, function(certRes) {
+            dd.hideLoading();
+            var respData = paramUtils.resp(certRes);
+            if (respData.success) {
+                var certInfo = respData.data;
+                if (certInfo !=undefined && certInfo != null) {
+                    app.existCert = true;
+                    app.certInfo = certInfo;
+                    //存在证书的话就跳转到证书界面
+                     dd.redirectTo({
+                        url: "/pages/cert/cert"
+                    });
+                }
+            } else {
+                    //跳转到错误页面
+                msg.gotoErrorPage(respData.msg, null, null);
+            }
+        }, null);
+    },
     onPullDownRefresh() {
         dd.stopPullDownRefresh();
     },
@@ -72,33 +98,23 @@ Page({
                 msg.gotoErrorPage(respData.msg,null,null);
                 return;
             }
-            //请求服务器，获取当前用户的证书信息
+             //请求服务器，获取当前用户的证书信息
             var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
             app.request(app.GATE_WAY, certInfoParam, function(certRes) {
                 dd.hideLoading();
                 var respData = paramUtils.resp(certRes);
                 if (respData.success) {
                     var certInfo = respData.data;
-                    //TEST 模拟获取用户信息
-                    // certInfo = {
-                    //     name: '小龙',
-                    //     sn: '10086',
-                    //     code: '110101199003073490',
-                    //     notBefore: '2019年8月1日',
-                    //     notAfter: '2020年8月1日',
-                    //     status: 2000
-                    // };
                     if (certInfo !=undefined && certInfo != null) {
                         app.existCert = true;
                         app.certInfo = certInfo;
                     }
                     var url = "/pages/cert/cert";
-                    //跳转到主页
                     dd.redirectTo({
                         url: url
                     });
                 } else {
-                     //跳转到错误页面
+                        //跳转到错误页面
                     msg.gotoErrorPage(respData.msg, null, null);
                 }
             }, null);
