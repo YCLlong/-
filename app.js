@@ -4,6 +4,8 @@ App({
     //GATE_WAY:'http://192.168.166.238:8080/spInterface/message/msg/GateWay.htm',
     GATE_WAY: 'http://60.190.254.12:9003/spInterface/message/msg/GateWay.htm',
     //GATE_WAY:'http://192.168.110.150:8080/spInterface/message/msg/GateWay.htm',
+   // GATE_WAY: 'http://192.168.6.91:9003/spInterface/message/msg/GateWay.htm',
+   
     //缓存中用户钉钉号标识
     DD_USER_CODE: 'ddUserCode',
 

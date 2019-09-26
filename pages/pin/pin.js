@@ -49,21 +49,22 @@ Page({
             dd.showLoading({
                 content: '校验中...'
             });
-            this.pin(v, function(successData, pageObject) {
+            let thisObj = this;
+            this.pin(v, function(successData, thisObj) {
                 //服务器返回pin码正确的回调
                 dd.hideLoading();   //关闭遮罩层
-                this.setData({
+                thisObj.setData({
                     oneBack:false
                 });
                 msgUtils.gotoSuccessPage('操作成功', '/pages/cert/cert');
-            }, function(errorData, pageObject) {
+            }, function(errorData, thisObj) {
                 //服务器返回pin码错误，或者别的问题的回调
                 dd.hideLoading();
                 //4018表示pin码错误
                 if (errorData.code == '4018') {
                     msgUtils.errorMsg('pin码输入错误');
                 } else {
-                      this.setData({
+                      thisObj.setData({
                             oneBack:false
                         });
                     msgUtils.gotoErrorPage(errorData.msg, null, '/pages/cert/cert');
