@@ -1,0 +1,2 @@
+<text>where are you?</text>
+<map  longitude="{{longitude}}" latitude="{{latitude}}"></map>
