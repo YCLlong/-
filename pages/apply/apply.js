@@ -1,39 +1,71 @@
+var app = getApp();
+var paramUtils = require('/utils/param.js');
+var msg = require('/utils/msg.js');
+var verify = require('/utils/verify.js');
+
 Page({
     data: {
-
+        verifyCodeDisable: true,
+        applyDisable: true,
+        verifyCodeMsg: '获取',
+        countDown: 60
     },
-    onLoad() { 
-         dd.showLoading({
+    onLoad() {
+        dd.showLoading({
             content: '正在检测证书信息...'
         });
-        var app = getApp();
-        var paramUtils = require('/utils/param.js');
-       //请求服务器，获取当前用户的证书信息
+        //请求服务器，获取当前用户的证书信息
         var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
         app.request(app.GATE_WAY, certInfoParam, function(certRes) {
             dd.hideLoading();
             var respData = paramUtils.resp(certRes);
             if (respData.success) {
                 var certInfo = respData.data;
-                if (certInfo !=undefined && certInfo != null) {
+                if (certInfo != undefined && certInfo != null) {
                     app.existCert = true;
                     app.certInfo = certInfo;
                     //存在证书的话就跳转到证书界面
-                     dd.redirectTo({
+                    dd.redirectTo({
                         url: "/pages/cert/cert"
                     });
                 }
             } else {
-                    //跳转到错误页面
+                //跳转到错误页面
                 msg.gotoErrorPage(respData.msg, null, null);
             }
         }, null);
+    },
+    onShow(){
+        var lastTime = dd.getStorageSync({ key: app.VERIFY_MSG_CODE_LAST_TIME }).data;
+        console.log('lastTime:' + lastTime);
+        if(lastTime == null || lastTime == undefined){
+             this.setData({
+                verifyCodeDisable:false,
+                applyDisable:true
+            });
+            return;
+        }
+        var nowDate = new Date().getTime();
+        console.log('nowDate:' + nowDate);
+        var inteval = Math.round((nowDate - lastTime)/1000);
+        console.log('inteval:' + inteval);
+        if(inteval < 60){
+            this.setData({
+                countDown:60 - inteval,
+                verifyCodeDisable:true
+            });
+            this.countDownStep();
+        }else{
+             this.setData({
+                verifyCodeDisable:false
+            });
+        }
     },
     onPullDownRefresh() {
         dd.stopPullDownRefresh();
     },
 
-    verify(data) {
+    verifyParam(data) {
         var verify = require('/utils/verify.js');
         var msg = require('/utils/msg.js');
         if (verify.isBlank(data.name)) {
@@ -64,20 +96,34 @@ Page({
             msg.errorMsg("两次pin码输入不一致");
             return false;
         }
+
+        
+        if (verify.isBlank(data.verifyCode)) {
+            msg.errorMsg("验证码必须输入");
+            return false;
+        }
+
+        if (data.verifyCode.trim().length != 4) {
+            msg.errorMsg("验证码必须是4位");
+            return false;
+        }
+
+        if(this.data.applyDisable){
+             msg.errorMsg("您必须先获取手机验证码");
+            return false;
+        }
+
+        
         return true;
     },
 
 
     certApply: function(e) {
         var data = e.detail.value;
-        if (!this.verify(data)) {
+        if (!this.verifyParam(data)) {
             return;
         }
-        var app = getApp();
         var sha = require('/utils/sha256.js');
-        var paramUtils = require('/utils/param.js');
-        var msg = require('/utils/msg.js');
-
         var pinHash = sha.sha256(data.pin);
         var applyInfo = {
             name: data.name,
@@ -85,7 +131,7 @@ Page({
             phone: data.phone,
             pin: pinHash
         };
-        
+
         //封装申请证书的参数
         var param = paramUtils.certApplyParam(applyInfo, app.DD_USER_TOKEN);
         dd.showLoading({
@@ -95,17 +141,17 @@ Page({
             var respData = paramUtils.resp(res);
             if (!respData.success) {
                 dd.hideLoading();
-                msg.gotoErrorPage(respData.msg,null,null);
+                msg.gotoErrorPage(respData.msg, null, null);
                 return;
             }
-             //请求服务器，获取当前用户的证书信息
+            //请求服务器，获取当前用户的证书信息
             var certInfoParam = paramUtils.certInfoParam('1', app.DD_USER_TOKEN);
             app.request(app.GATE_WAY, certInfoParam, function(certRes) {
                 dd.hideLoading();
                 var respData = paramUtils.resp(certRes);
                 if (respData.success) {
                     var certInfo = respData.data;
-                    if (certInfo !=undefined && certInfo != null) {
+                    if (certInfo != undefined && certInfo != null) {
                         app.existCert = true;
                         app.certInfo = certInfo;
                     }
@@ -114,10 +160,86 @@ Page({
                         url: url
                     });
                 } else {
-                        //跳转到错误页面
+                    //跳转到错误页面
                     msg.gotoErrorPage(respData.msg, null, null);
                 }
             }, null);
-        },null);
+        }, null);
+    },
+
+    /**
+     * 输入手机号时绑定
+     */
+    phoneInput(e) {
+        this.setData({
+            phone: e.detail.value,
+        });
+    },
+
+    /**
+     * 获取短信验证码
+     */
+    getVerifyCode() {
+        if (this.data.verifyCodeDisable) {
+            return;
+        }
+
+        if (verify.isBlank(this.data.phone) || !verify.isMobileNo(this.data.phone)) {
+            msg.errorMsg("请输正确的入手机号");
+            return;
+        }
+
+        this.setData({
+            verifyCodeDisable: true,
+            applyDisable:false,
+            verifyCodeMsg: '重新获取(60s)'
+        });
+
+        //写入最后一次获取短信验证码的毫秒时间戳
+        var lastVerifyCodeTime = new Date().getTime();
+        try {
+            dd.setStorageSync({
+                key: app.VERIFY_MSG_CODE_LAST_TIME,
+                data: lastVerifyCodeTime
+            });
+        } catch (e) {
+            msg.errorMsg('写入缓存失败');
+            return;
+        }
+        this.countDownStep();
+
+
+        var param = paramUtils.verifyCodeRequestParam(this.data.phone, app.DD_USER_TOKEN);
+        app.request(app.GATE_WAY, param, function(res) {
+            var respData = paramUtils.resp(res);
+            if (!respData.success) {
+                msg.errorMsg(respData.msg);
+                return;
+            }
+        });
+
+        //调用短信验证码接口
+        
+       
+
+    },
+
+    countDownStep(){
+        this.inteval = setInterval(()=>{
+            this.data.countDown--;
+            this.setData({
+                verifyCodeDisable: true,
+                verifyCodeMsg:'重新获取(' + this.data.countDown + 's)'
+            });
+            if(this.data.countDown == 0){
+                clearInterval(this.inteval);
+                this.setData({
+                    verifyCodeMsg:'获取',
+                    countDown: 60,
+                    verifyCodeDisable:false
+                });
+            }
+        },1000);
+            
     }
 });

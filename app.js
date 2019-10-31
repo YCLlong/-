@@ -12,6 +12,9 @@ App({
     //用户登录系统之后返回token
     DD_USER_TOKEN: '',
 
+    //最后一次获取短信验证码的时间
+    VERIFY_MSG_CODE_LAST_TIME:'verifyMsgCodeLastTime',
+
 
 
     onLaunch(options) {

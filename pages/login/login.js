@@ -39,9 +39,7 @@ Page({
             var resData = paramUtils.resp(res);
             if (resData.success) {
                 var token = resData.data.userToken;
-
-                //TEST  模拟token
-                //token = '123456789';
+                
                 if (token == null || token == undefined) {
                     msg.errorMsg('服务器返回参数错误');
                     return;
@@ -112,8 +110,6 @@ Page({
                         //获取用户免密标识
                         var userCode = resData.data.freeId;
 
-                        //TEST 模拟用户免登标识
-                        //userCode = 'DD_YCL';
                         if (userCode == null || userCode == undefined) {
                             msg.errorMsg('服务器返回参数错误');
                             return;

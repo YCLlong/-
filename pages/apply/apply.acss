@@ -27,3 +27,17 @@
   height:100rpx;
   border-bottom:1rpx solid #ccc;
 }
+
+.codeBtn{
+  width:100px;
+  height:35px;
+  display:inline-block;
+  line-height:35px;
+  float:right;
+  top:8px;
+  position:relative;
+}
+
+.userInfo>.codeInput{
+  width:120px;display:inline-block;
+}

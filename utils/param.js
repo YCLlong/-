@@ -322,6 +322,19 @@ function certUseRequestParam(codeInfo,userToken) {
 }
 
 /**
+ * 获取验证码接口请求参数
+ * @param phone         手机号
+ * @param userToken     登录后获得的token,时效30分钟的后续调用凭证
+ */
+function verifyCodeRequestParam(phone, userToken) {
+    var param = createRequestParam('smsValid');
+    param.msgData.phone = phone;
+    param.msgData.userToken = userToken;
+    param.msgData = JSON.stringify(param.msgData);
+    return param;
+}
+
+/**
  * API6校验pin码的正确性
  * @param token   这个token不是登录后返回的token，而是请求使用证书的接口后代表那次请求的token
  * @param pinHash pin码的哈希值
@@ -376,5 +389,6 @@ module.exports = {
     certUseParam: certUseRequestParam,
     verifyPinParam: verifyPinRequestParam,
     getParameter: getParameter,
-    onloadParseParam:onloadParseParam
+    onloadParseParam:onloadParseParam,
+    verifyCodeRequestParam:verifyCodeRequestParam
 }

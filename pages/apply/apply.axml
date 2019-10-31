@@ -9,22 +9,32 @@
             <view class="label">姓名</view>
             <input name="name" placeholder="请输入姓名" onInput="nameInput" />
           </view>
+
           <view class="userInfo">
-            <view class="label">身份证号码</view>
+            <view class="label">身份证号</view>
             <input name="code" placeholder="请输入身份证号码" maxlength="18" />
           </view>
+         
           <view class="userInfo">
-            <view class="label">手机号</view>
-            <input name="phone" placeholder="请输入手机号" type="number" maxlength="11"/>
-          </view>
-          <view class="userInfo">
-            <view class="label">请输入pin码</view>
+            <view class="label">pin码</view>
             <input name="pin" password="true" placeholder="请输入pin码"  maxlength="6"/>
           </view>
+
           <view class="userInfo">
-            <view class="label">请确认pin码</view>
+            <view class="label">确认pin码</view>
              <input name="pinConfirm" password="true" placeholder="请确认pin码"  maxlength="6"/>
           </view>
+
+          <view class="userInfo">
+            <view class="label">手机号</view>
+            <input name="phone" placeholder="请输入手机号" type="number" onInput="phoneInput" maxlength="11"/>
+          </view>
+
+           <view class="userInfo">
+             <view class="label">验证码</view>
+             <input class="codeInput" name="verifyCode" placeholder="请输入验证码" maxlength="4"/>
+             <button class="codeBtn" size="mini" type="primary" disabled="{{verifyCodeDisable}}" onTap="getVerifyCode">{{verifyCodeMsg}}</button>
+           </view>
             <button class="mt50" formType="submit"  type="primary">申请</button>
         </view>
     </form>
