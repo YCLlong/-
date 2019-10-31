@@ -303,6 +303,7 @@ function certApplyRequestParam(applyInfo, userToken) {
     param.msgData.code = applyInfo.code;
     param.msgData.phone = applyInfo.phone;
     param.msgData.pin = applyInfo.pin;
+    param.msgData.verifyCode = applyInfo.verifyCode;
     param.msgData.userToken = userToken;
     param.msgData = JSON.stringify(param.msgData);
     return param;

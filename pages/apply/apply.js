@@ -132,7 +132,8 @@ Page({
             name: data.name,
             code: data.code,
             phone: data.phone,
-            pin: pinHash
+            pin: pinHash,
+            verifyCode:data.verifyCode
         };
 
         //封装申请证书的参数
@@ -143,7 +144,6 @@ Page({
         app.request(app.GATE_WAY, param, function(res) {
             var respData = paramUtils.resp(res);
             if (!respData.success) {
-                dd.hideLoading();
                 if(respData.code == '7001' || respData.code == '7002' || respData.code == '7003' || respData.code == '7004'){
                     msg.errorMsg(respData.msg);
                 }else{
@@ -223,6 +223,7 @@ Page({
                 msg.errorMsg(respData.msg);
                 return;
             }
+            msg.successMsg("验证码发送成功。");
         });
     },
 
