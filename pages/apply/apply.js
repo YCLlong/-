@@ -30,8 +30,11 @@ Page({
                     });
                 }
             } else {
-                //跳转到错误页面
-                msg.gotoErrorPage(respData.msg, null, null);
+                //4016表示用户还没申请证书,其他错误就跳转错误页面
+                if(respData.code != '4016'){
+                     //跳转到错误页面
+                     msg.gotoErrorPage(respData.msg, null, null);
+                }
             }
         }, null);
     },
