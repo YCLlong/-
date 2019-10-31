@@ -141,7 +141,11 @@ Page({
             var respData = paramUtils.resp(res);
             if (!respData.success) {
                 dd.hideLoading();
-                msg.gotoErrorPage(respData.msg, null, null);
+                if(respData.code == '7001' || respData.code == '7002' || respData.code == '7003' || respData.code == '7004'){
+                    msg.errorMsg(respData.msg);
+                }else{
+                    msg.gotoErrorPage(respData.msg, null, null);
+                }
                 return;
             }
             //请求服务器，获取当前用户的证书信息
@@ -208,7 +212,7 @@ Page({
         }
         this.countDownStep();
 
-
+        //调用短信验证码接口
         var param = paramUtils.verifyCodeRequestParam(this.data.phone, app.DD_USER_TOKEN);
         app.request(app.GATE_WAY, param, function(res) {
             var respData = paramUtils.resp(res);
@@ -217,11 +221,6 @@ Page({
                 return;
             }
         });
-
-        //调用短信验证码接口
-        
-       
-
     },
 
     countDownStep(){
