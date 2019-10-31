@@ -40,7 +40,6 @@ Page({
     },
     onShow(){
         var lastTime = dd.getStorageSync({ key: app.VERIFY_MSG_CODE_LAST_TIME }).data;
-        console.log('lastTime:' + lastTime);
         if(lastTime == null || lastTime == undefined){
              this.setData({
                 verifyCodeDisable:false,
@@ -49,9 +48,7 @@ Page({
             return;
         }
         var nowDate = new Date().getTime();
-        console.log('nowDate:' + nowDate);
         var inteval = Math.round((nowDate - lastTime)/1000);
-        console.log('inteval:' + inteval);
         if(inteval < 60){
             this.setData({
                 countDown:60 - inteval,
@@ -144,6 +141,7 @@ Page({
         app.request(app.GATE_WAY, param, function(res) {
             var respData = paramUtils.resp(res);
             if (!respData.success) {
+                dd.hideLoading();
                 if(respData.code == '7001' || respData.code == '7002' || respData.code == '7003' || respData.code == '7004'){
                     msg.errorMsg(respData.msg);
                 }else{

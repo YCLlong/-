@@ -1,7 +1,7 @@
 App({
     //小程序后台接口网关
-    //GATE_WAY: 'http://60.190.254.12:9003/spInterface/message/msg/GateWay.htm',
-    GATE_WAY:'http://192.168.0.238:8080/spInterface/message/msg/GateWay.htm',
+    GATE_WAY: 'http://60.190.254.12:9003/spInterface/message/msg/GateWay.htm',
+    //GATE_WAY:'http://192.168.0.238:8080/spInterface/message/msg/GateWay.htm',
     //GATE_WAY:'http://192.168.110.150:8080/spInterface/message/msg/GateWay.htm',
    // GATE_WAY: 'http://192.168.6.91:9003/spInterface/message/msg/GateWay.htm',
    
@@ -52,7 +52,7 @@ App({
                     param = {};
                 }
                 //生产环境这一行去掉
-                console.info(JSON.stringify(param));
+                //console.info(JSON.stringify(param));
                 dd.httpRequest({
                     url: url,
                     method: 'POST',
@@ -62,7 +62,7 @@ App({
                     success: function(res) {
                         successFun(res);
                         //生产环境这一行去掉
-                        console.info(JSON.stringify(res));
+                        //console.info(JSON.stringify(res));
                     },
                     fail: function(res) {
                         if (errorFun != null) {
