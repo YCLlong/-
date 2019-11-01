@@ -8,7 +8,8 @@ Page({
         verifyCodeDisable: true,
         applyDisable: true,
         verifyCodeMsg: '获取',
-        countDown: 60
+        countDown: 60,
+        lastApplyTime:0
     },
     onLoad() {
         dd.showLoading({
@@ -119,6 +120,14 @@ Page({
 
 
     certApply: function(e) {
+        //防重复提交，1秒内不允许多次提交
+        if(new Date().getTime() - this.data.lastApplyTime <1000){
+            return;
+        }
+        this.setData({
+            lastApplyTime:new Date().getTime()
+        });
+
         var data = e.detail.value;
         if (!this.verifyParam(data)) {
             return;

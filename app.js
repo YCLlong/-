@@ -52,7 +52,7 @@ App({
                     param = {};
                 }
                 //生产环境这一行去掉
-                console.info(JSON.stringify(param));
+                //console.info(JSON.stringify(param));
                 dd.httpRequest({
                     url: url,
                     method: 'POST',
@@ -62,7 +62,7 @@ App({
                     success: function(res) {
                         successFun(res);
                         //生产环境这一行去掉
-                        console.info(JSON.stringify(res));
+                        //console.info(JSON.stringify(res));
                     },
                     fail: function(res) {
                         if (errorFun != null) {

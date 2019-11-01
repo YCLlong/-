@@ -1,6 +1,7 @@
 Page({
     data: {
         existCert: false,
+        lastScanTime:0,
         certInfo: {}
     },
     onLoad() {
@@ -27,6 +28,17 @@ Page({
      * 扫二维码
      */
     scan() {
+        /**
+         * 相当于加了一个锁，防止快速点击多次,点击多次会唤起多个扫一扫界面，每个界面都无法扫描
+         * 1s内只能点击一次
+         */
+        if(new Date().getTime() - this.data.lastScanTime <1000){
+            return;
+        }
+        this.setData({
+            lastScanTime:new Date().getTime()
+        });
+
         var msgUtils = require("/utils/msg.js");
         var paramUtils = require("/utils/param.js");
         dd.scan({
@@ -56,7 +68,7 @@ Page({
                 }
             },
             fail: (res) => {
-                msgUtils.errorMsg("扫码失败");
+               // msgUtils.errorMsg("扫码失败");
             }
         });
     }
