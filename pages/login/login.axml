@@ -12,8 +12,8 @@
     </text>
   </view>
   <view class="mt30">
-    <view  class="tips2"><text class="point">●</text><text>获取您的公开信息（昵称、头像、性别等）；</text></view>
-    <view class="tips2"><text class="point">●</text><text>使用您的身份信息（手机号码、证件号码）办理业务。</text></view>
+    <view  class="tips2"><text class="point">●</text><text>获取您的公开信息（钉钉帐号、昵称等）</text></view>
+    <view class="tips2"><text class="point">●</text><text>使用您的身份信息（手机号码、证件号码）办理业务</text></view>
   </view>
 </view>
 <view class="plr50 mt30">

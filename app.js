@@ -52,17 +52,17 @@ App({
                     param = {};
                 }
                 //生产环境这一行去掉
-                //console.info(JSON.stringify(param));
+                console.info(JSON.stringify(param));
                 dd.httpRequest({
                     url: url,
                     method: 'POST',
-                    timeout: 6000,
+                    timeout: 30000,
                     data: param,
                     dataType: 'json',
                     success: function(res) {
                         successFun(res);
                         //生产环境这一行去掉
-                        //console.info(JSON.stringify(res));
+                        console.info(JSON.stringify(res));
                     },
                     fail: function(res) {
                         if (errorFun != null) {
