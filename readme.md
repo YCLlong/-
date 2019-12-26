@@ -13,3 +13,15 @@
 模拟用户是否存在证书           | /pages/login/login.js  |    59行      |   变量certInfo就是用户的证书信息，设置为null就是没有证书，改status可以控制用户的证书状态
 模拟证书申请后查询证书结果      | /pages/apply/apply.js |    74行      |    变量certInfo就是用户的证书信息
 模拟pin码校验结果             | /pages/pin/pin.js      |    23行      |    修改变量respData
+
+
+
+
+
+# 小程序地址修改
+项目名称                      |   地址修改            | 发布方式
+:----------------------------|:----------------------|:--------
+钉钉小程序                     | app.js | 钉钉小程序管理后台发布
+授权页面                       |sp/js/biz.js |放webapps下
+模拟应用方后台对接demo          |dd.properties，application.yml|放webapps下
+模拟应用方小程序对接demo        |app.js                |钉钉小程序管理后台发布

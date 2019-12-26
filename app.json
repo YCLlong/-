@@ -9,7 +9,7 @@
     "pages/success/success"
   ],
   "window": {
-    "defaultTitle": "云证书",
+    "defaultTitle": "数字云证",
     "titleBarColor": "#388FEE",
     "pullRefresh":false,
     "allowsBounceVertical":"NO"

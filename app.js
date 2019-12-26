@@ -1,9 +1,12 @@
 App({
     //小程序后台接口网关
-    GATE_WAY: 'http://60.190.254.12:9003/spInterface/message/msg/GateWay.htm',
+    //GATE_WAY: 'http://60.190.254.12:9003/spInterface/message/msg/GateWay.htm',//外网测试
     //GATE_WAY:'http://192.168.0.238:8080/spInterface/message/msg/GateWay.htm',
+    //GATE_WAY:'http://192.168.1.117:8080/spInterface/message/msg/GateWay.htm',
     //GATE_WAY:'http://192.168.110.150:8080/spInterface/message/msg/GateWay.htm',
-   // GATE_WAY: 'http://192.168.6.91:9003/spInterface/message/msg/GateWay.htm',
+    GATE_WAY:'http://ra.zj.gov.cn/spInterface/message/msg/GateWay.htm',    //正式
+   
+
    
     //缓存中用户钉钉号标识
     DD_USER_CODE: 'ddUserCode',
@@ -34,7 +37,7 @@ App({
      * @param param       :请求参数，param json对象 
      * @param successFun  :访问成功回调函数,注意，这个函数内不能再调用别的函数，钉钉不支持
      * @param errorFun    :请求失败回调函数，如果是null,那么会打印默认的错误信息 @function showError ，这个函数内不能再调用别的函数。钉钉不支持
-     * @param pointer     :调用者对象指针
+     * @param pointer     :调用者对象指针 可不传
      */
     request(url, param, successFun, errorFun, pointer) {
         dd.getNetworkType({

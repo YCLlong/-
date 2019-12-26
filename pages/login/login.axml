@@ -2,13 +2,13 @@
   <view class="loginTitleBg"></view>
   <image class="logo" src="/images/logo.png" />
   <view class="title">
-    <text>云证书</text>
+    <text>数字云证</text>
   </view>
 </view>
 <view class="plr40" style="background:#fff;padding-top:40rpx;padding-bottom:20rpx;">
   <view class="tips1">
     <text>
-      为了您便于满足办理<text class="fwb plr5 tc">云证书</text>实名制的要求，需要您使用云证书认证服务，并在认证完成后，授权一下信息：
+      为了您便于满足办理<text class="fwb plr5 tc">数字云证</text>实名制的要求，需要您使用数字云证认证服务，并在认证完成后，授权一下信息：
     </text>
   </view>
   <view class="mt30">
@@ -17,6 +17,6 @@
   </view>
 </view>
 <view class="plr50 mt30">
-  <view class="tip3 mb30">开始认证即表示<text class="plr10" style="color:#388FEE;">《认证服务协议》</text></view>
+  <!-- <view class="tip3 mb30">开始认证即表示<text class="plr10" style="color:#388FEE;">《认证服务协议》</text></view> -->
   <button size="default" type="primary" onTap="login">开始登录</button>
 </view>

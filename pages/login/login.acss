@@ -17,7 +17,7 @@ text{
   background:#fff;
 }
 .loginTitleBg{
-  background-image: url(../../images/loginbg.jpg);
+  background-image: url(../../images/bg.jpg);
   width:750rpx;
   height:253.5rpx;
   background-size:cover;
